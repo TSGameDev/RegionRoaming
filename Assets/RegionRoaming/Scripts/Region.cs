@@ -6,6 +6,6 @@ namespace RegionRoaming
 {
     public class Region : MonoBehaviour
     {
-        public List<Vector3> polyPoints = new List<Vector3>();
+        public List<Vector3> Vertices;
     }
 }

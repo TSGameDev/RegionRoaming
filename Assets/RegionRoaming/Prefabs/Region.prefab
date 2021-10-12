@@ -43,4 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7333d3796e0379f4daf488af7ecd5024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  polyPoints: []
+  Vertices:
+  - {x: 0, y: 0, z: 0}
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
