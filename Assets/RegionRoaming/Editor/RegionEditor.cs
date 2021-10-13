@@ -7,6 +7,9 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
+    static List<Vector3> defaultVerts = new List<Vector3>() { new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1), };
+    static GameObject regionManager = null;
+    static GameObject newRegion = null;
 
     //chagnes the inspector for the region script
     public override void OnInspectorGUI()
@@ -130,9 +133,18 @@ public class RegionEditor : Editor
 
     //creates a menu items which gets the prefab from project path and then instantiates it
     [MenuItem("Region Roaming/Create Region", false, 10)]
-    private static void SpawningPrefab()
+    private static void CreateRegion()
     {
-        GameObject regionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/RegionRoaming/Prefabs/Region.prefab", typeof(GameObject));
-        Instantiate(regionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        if (regionManager == null)
+            regionManager = new GameObject("Region Manager");
+
+        if(newRegion == null)
+        {
+            newRegion = new GameObject("New Region", typeof(Region));
+            newRegion.GetComponent<Region>().Vertices = defaultVerts;
+            newRegion.transform.parent = regionManager.transform;
+        }
+        else
+            Instantiate(newRegion, new Vector3(0,0,0), Quaternion.identity, regionManager.transform);
     }
 }
