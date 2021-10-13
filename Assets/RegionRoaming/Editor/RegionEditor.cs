@@ -7,6 +7,7 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
+
     //chagnes the inspector for the region script
     public override void OnInspectorGUI()
     {
@@ -14,9 +15,9 @@ public class RegionEditor : Editor
         if (region == null)
             return;
 
-        GUILayout.Label("Vertices");
+        GUILayout.Label("Corners");
 
-        Undo.RecordObject(region, "Changed Region");
+        Undo.RecordObject(region, "Changed Region Settings");
 
         for (int i = 0; i < region.Vertices.Count; i++)
         {
@@ -24,16 +25,47 @@ public class RegionEditor : Editor
 
             EditorGUILayout.BeginHorizontal(GUILayout.MaxHeight(10f));
             EditorGUI.BeginChangeCheck();
+
+            GUILayout.Label("X: ");
             float x = EditorGUILayout.FloatField(region.Vertices[i].x);
+
+            GUILayout.Label("Y: ");
             float y = EditorGUILayout.FloatField(region.Vertices[i].y);
+
+            GUILayout.Label("Z: ");
             float z = EditorGUILayout.FloatField(region.Vertices[i].z);
+
+            if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(20)))
+            {
+                region.Vertices.RemoveAt(i);
+                break;
+            }
+
             if (EditorGUI.EndChangeCheck())
             {
-                region.Vertices[i].Set(x, y, z);
-                Debug.Log($"New Data for Element {i} - Vector3({region.Vertices[i].x},{region.Vertices[i].y},{region.Vertices[i].z})");
-                Debug.Log($"X:{x} Y:{y} Z: {z}");
+                region.Vertices[i] = new Vector3(x,y,z);
             }
+
             EditorGUILayout.EndHorizontal();
+        }
+
+        EditorGUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Add Corner"))
+        {
+            region.Vertices.Add(new Vector3(0, 0, 0));
+        }
+
+        if (GUILayout.Button("Set to default"))
+        {
+
+        }
+
+        EditorGUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Set as default"))
+        {
+
         }
     }
 
