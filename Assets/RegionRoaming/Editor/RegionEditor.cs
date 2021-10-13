@@ -7,11 +7,18 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
+    static private GameObject regionPrefab;
+    private void OnEnable()
+    {
+        regionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/RegionRoaming/Prefabs/Region.prefab", typeof(GameObject));
+    }
+
     //changes the scene view when a region script object is selected
     private void OnSceneGUI()
     {
         //stores the selected region into the region variable
         Region region = target as Region;
+        //doesn't run this editor script unless 3 verts are present
         if (region.Vertices.Count <= 2)
             return;
 
@@ -69,5 +76,11 @@ public class RegionEditor : Editor
             Handles.DrawLine(verts[index], verts[0]);
         else
             Handles.DrawLine(verts[index], verts[index + 1]);
+    }
+
+    [MenuItem("Region Roaming/Create Region", false, 10)]
+    private static void SpawningPrefab()
+    {
+        Instantiate(regionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
 }
