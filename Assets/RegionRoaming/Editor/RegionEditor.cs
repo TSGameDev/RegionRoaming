@@ -7,12 +7,6 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
-    static private GameObject regionPrefab;
-    private void OnEnable()
-    {
-        regionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/RegionRoaming/Prefabs/Region.prefab", typeof(GameObject));
-    }
-
     //changes the scene view when a region script object is selected
     private void OnSceneGUI()
     {
@@ -78,9 +72,11 @@ public class RegionEditor : Editor
             Handles.DrawLine(verts[index], verts[index + 1]);
     }
 
+    //creates a menu items which gets the prefab from project path and then instantiates it
     [MenuItem("Region Roaming/Create Region", false, 10)]
     private static void SpawningPrefab()
     {
+        GameObject regionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/RegionRoaming/Prefabs/Region.prefab", typeof(GameObject));
         Instantiate(regionPrefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
 }
