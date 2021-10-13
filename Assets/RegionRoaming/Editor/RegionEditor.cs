@@ -7,6 +7,36 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
+    //chagnes the inspector for the region script
+    public override void OnInspectorGUI()
+    {
+        Region region = (Region)target;
+        if (region == null)
+            return;
+
+        GUILayout.Label("Vertices");
+
+        Undo.RecordObject(region, "Changed Region");
+
+        for (int i = 0; i < region.Vertices.Count; i++)
+        {
+            GUILayout.Label($"Element {i}:");
+
+            EditorGUILayout.BeginHorizontal(GUILayout.MaxHeight(10f));
+            EditorGUI.BeginChangeCheck();
+            float x = EditorGUILayout.FloatField(region.Vertices[i].x);
+            float y = EditorGUILayout.FloatField(region.Vertices[i].y);
+            float z = EditorGUILayout.FloatField(region.Vertices[i].z);
+            if (EditorGUI.EndChangeCheck())
+            {
+                region.Vertices[i].Set(x, y, z);
+                Debug.Log($"New Data for Element {i} - Vector3({region.Vertices[i].x},{region.Vertices[i].y},{region.Vertices[i].z})");
+                Debug.Log($"X:{x} Y:{y} Z: {z}");
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+    }
+
     //changes the scene view when a region script object is selected
     private void OnSceneGUI()
     {
@@ -39,29 +69,6 @@ public class RegionEditor : Editor
         for (int i = 0; i < region.Vertices.Count; i++)
         {
             HandleFunctionaity(region, i);
-        }
-    }
-
-    //chagnes the inspector for the region script
-    public override void OnInspectorGUI()
-    {
-        Region region = (Region)target;
-        if (region == null)
-            return;
-
-        GUILayout.Label("Vertices");
-
-        Undo.RecordObject(region, "Changed Region");
-
-        for (int i = 0; i < region.Vertices.Count; i++)
-        {
-            GUILayout.Label($"Element {i}:");
-
-            EditorGUILayout.BeginHorizontal(GUILayout.MaxHeight(10f));
-            region.Vertices[i].Set(EditorGUILayout.FloatField("X:", region.Vertices[i].x),
-                EditorGUILayout.FloatField("Y:", region.Vertices[i].y),
-                EditorGUILayout.FloatField("Z:", region.Vertices[i].z));
-            EditorGUILayout.EndHorizontal();
         }
     }
 
