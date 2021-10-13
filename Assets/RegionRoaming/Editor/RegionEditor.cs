@@ -45,7 +45,24 @@ public class RegionEditor : Editor
     //chagnes the inspector for the region script
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
+        Region region = (Region)target;
+        if (region == null)
+            return;
+
+        GUILayout.Label("Vertices");
+
+        Undo.RecordObject(region, "Changed Region");
+
+        for (int i = 0; i < region.Vertices.Count; i++)
+        {
+            GUILayout.Label($"Element {i}:");
+
+            EditorGUILayout.BeginHorizontal(GUILayout.MaxHeight(10f));
+            region.Vertices[i].Set(EditorGUILayout.FloatField("X:", region.Vertices[i].x),
+                EditorGUILayout.FloatField("Y:", region.Vertices[i].y),
+                EditorGUILayout.FloatField("Z:", region.Vertices[i].z));
+            EditorGUILayout.EndHorizontal();
+        }
     }
 
     //function that allows the drawn handles to be moved and bring the vert point with it for better user experience.
