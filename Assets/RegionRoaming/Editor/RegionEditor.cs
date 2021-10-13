@@ -7,22 +7,20 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
-    static List<Vector3> defaultVerts = new List<Vector3>() { new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1), };
     static GameObject regionManager = null;
-    static GameObject newRegion = null;
+    Region targetRegion = null;
 
     //chagnes the inspector for the region script
     public override void OnInspectorGUI()
     {
-        Region region = (Region)target;
-        if (region == null)
-            return;
+        //stores the selected region into the region variable
+        targetRegion = target as Region;
 
         GUILayout.Label("Corners");
 
-        Undo.RecordObject(region, "Changed Region Settings");
+        Undo.RecordObject(targetRegion, "Changed Region Settings");
 
-        for (int i = 0; i < region.Vertices.Count; i++)
+        for (int i = 0; i < targetRegion.Vertices.Count; i++)
         {
             GUILayout.Label($"Element {i}:");
 
@@ -30,23 +28,23 @@ public class RegionEditor : Editor
             EditorGUI.BeginChangeCheck();
 
             GUILayout.Label("X: ");
-            float x = EditorGUILayout.FloatField(region.Vertices[i].x);
+            float x = EditorGUILayout.FloatField(targetRegion.Vertices[i].x);
 
             GUILayout.Label("Y: ");
-            float y = EditorGUILayout.FloatField(region.Vertices[i].y);
+            float y = EditorGUILayout.FloatField(targetRegion.Vertices[i].y);
 
             GUILayout.Label("Z: ");
-            float z = EditorGUILayout.FloatField(region.Vertices[i].z);
+            float z = EditorGUILayout.FloatField(targetRegion.Vertices[i].z);
 
             if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(20)))
             {
-                region.Vertices.RemoveAt(i);
+                targetRegion.Vertices.RemoveAt(i);
                 break;
             }
 
             if (EditorGUI.EndChangeCheck())
             {
-                region.Vertices[i] = new Vector3(x,y,z);
+                targetRegion.Vertices[i] = new Vector3(x,y,z);
             }
 
             EditorGUILayout.EndHorizontal();
@@ -56,37 +54,23 @@ public class RegionEditor : Editor
 
         if (GUILayout.Button("Add Corner"))
         {
-            region.Vertices.Add(new Vector3(0, 0, 0));
-        }
-
-        if (GUILayout.Button("Set to default"))
-        {
-
+            targetRegion.Vertices.Add(new Vector3(0, 0, 0));
         }
 
         EditorGUILayout.EndHorizontal();
-
-        if (GUILayout.Button("Set as default"))
-        {
-
-        }
     }
 
     //changes the scene view when a region script object is selected
     private void OnSceneGUI()
     {
-        //stores the selected region into the region variable
-        Region region = target as Region;
-        //doesn't run this editor script unless 3 verts are present
-        if (region.Vertices.Count <= 2)
-            return;
+        targetRegion = target as Region;
 
         //makes the lines follow the gameobjects transform
-        Transform handleTransform = region.transform;
+        Transform handleTransform = targetRegion.transform;
         
         List<Vector3> vertTransforms = new List<Vector3>();
 
-        foreach(Vector3 vert in region.Vertices)
+        foreach(Vector3 vert in targetRegion.Vertices)
         {
             vertTransforms.Add(handleTransform.TransformPoint(vert));
         }
@@ -101,9 +85,9 @@ public class RegionEditor : Editor
         }
 
         //adds functionality to handles
-        for (int i = 0; i < region.Vertices.Count; i++)
+        for (int i = 0; i < targetRegion.Vertices.Count; i++)
         {
-            HandleFunctionaity(region, i);
+            HandleFunctionaity(targetRegion, i);
         }
     }
 
@@ -138,13 +122,7 @@ public class RegionEditor : Editor
         if (regionManager == null)
             regionManager = new GameObject("Region Manager");
 
-        if(newRegion == null)
-        {
-            newRegion = new GameObject("New Region", typeof(Region));
-            newRegion.GetComponent<Region>().Vertices = defaultVerts;
-            newRegion.transform.parent = regionManager.transform;
-        }
-        else
-            Instantiate(newRegion, new Vector3(0,0,0), Quaternion.identity, regionManager.transform);
+        GameObject newRegion = new GameObject("New Region", typeof(Region));
+        newRegion.transform.parent = regionManager.transform;
     }
 }
