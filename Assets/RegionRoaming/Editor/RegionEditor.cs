@@ -7,7 +7,7 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
-
+    //changes the scene view when a region script object is selected
     private void OnSceneGUI()
     {
         //stores the selected region into the region variable
@@ -31,25 +31,24 @@ public class RegionEditor : Editor
         //loops through and draws a line to each point creating the boarder of the region
         for (int i = 0; i < vertTransforms.Count; i++)
         {
-            if(i == vertTransforms.Count - 1)
-                Handles.DrawLine(vertTransforms[i], vertTransforms[0]);
-            else
-                Handles.DrawLine(vertTransforms[i], vertTransforms[i + 1]);
+            ConnectRegionPoints(vertTransforms, i);
         }
 
         //adds functionality to handles
         for (int i = 0; i < region.Vertices.Count; i++)
         {
-            ShowCorner(region, i);
+            HandleFunctionaity(region, i);
         }
     }
 
+    //chagnes the inspector for the region script
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
     }
 
-    private Vector3 ShowCorner(Region target, int index)
+    //function that allows the drawn handles to be moved and bring the vert point with it for better user experience.
+    private Vector3 HandleFunctionaity(Region target, int index)
     {
         Vector3 corner = target.transform.TransformPoint(target.Vertices[index]);
         EditorGUI.BeginChangeCheck();
@@ -61,5 +60,14 @@ public class RegionEditor : Editor
             target.Vertices[index] = target.transform.InverseTransformPoint(corner);
         }
         return corner;
+    }
+
+    //draws a line to all points creating a region
+    private void ConnectRegionPoints(List<Vector3> verts, int index)
+    {
+        if (index == verts.Count - 1)
+            Handles.DrawLine(verts[index], verts[0]);
+        else
+            Handles.DrawLine(verts[index], verts[index + 1]);
     }
 }
