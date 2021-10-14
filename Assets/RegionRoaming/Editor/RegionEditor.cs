@@ -8,13 +8,16 @@ using RegionRoaming;
 public class RegionEditor : Editor
 {
     static GameObject regionManager = null;
-    Region targetRegion = null;
+    Region targetRegion;
+    RegionManager RM;
+    string presetName = "Enter Preset Name!";
 
     //chagnes the inspector for the region script
     public override void OnInspectorGUI()
     {
         //stores the selected region into the region variable
         targetRegion = target as Region;
+        RM = regionManager.GetComponent<RegionManager>();
 
         GUILayout.Label("Corners");
 
@@ -51,13 +54,43 @@ public class RegionEditor : Editor
         }
 
         EditorGUILayout.BeginHorizontal();
-
         if (GUILayout.Button("Add Corner"))
         {
             targetRegion.Vertices.Add(new Vector3(0, 0, 0));
         }
 
+        if (GUILayout.Button("Add to Presets"))
+        {
+            RM.presets.Add(presetName, targetRegion.Vertices);
+        }
+
         EditorGUILayout.EndHorizontal();
+        EditorGUI.BeginChangeCheck();
+        presetName = EditorGUILayout.TextField(presetName);
+        EditorGUILayout.Space(10);
+        EditorGUI.EndChangeCheck();
+        if (RM.presets != null)
+        {
+            foreach (string preset in RM.presets.Keys)
+            {
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label(preset);
+
+                if (GUILayout.Button("Load Preset", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    RM.presets.TryGetValue(preset, out targetRegion.Vertices);
+                }
+
+                if (GUILayout.Button("Remove Preset", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    RM.presets.Remove(preset);
+                    break;
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+        }
     }
 
     //changes the scene view when a region script object is selected
@@ -119,8 +152,10 @@ public class RegionEditor : Editor
     [MenuItem("Region Roaming/Create Region", false, 10)]
     private static void CreateRegion()
     {
+        EditorGUI.BeginChangeCheck();
         if (regionManager == null)
-            regionManager = new GameObject("Region Manager");
+            regionManager = new GameObject("Region Manager", typeof(RegionManager));
+        EditorGUI.EndChangeCheck();
 
         GameObject newRegion = new GameObject("New Region", typeof(Region));
         newRegion.transform.parent = regionManager.transform;
