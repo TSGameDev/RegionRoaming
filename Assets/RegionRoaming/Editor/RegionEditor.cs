@@ -61,7 +61,12 @@ public class RegionEditor : Editor
 
         if (GUILayout.Button("Add to Presets"))
         {
-            RM.presets.Add(presetName, targetRegion.Vertices);
+            List<Vector3> temp = new List<Vector3>();
+            for (int i = 0; i < targetRegion.Vertices.Count; i++)
+            {
+                temp.Add(targetRegion.Vertices[i]);
+            }
+            RM.presets.Add(presetName, temp);
         }
 
         EditorGUILayout.EndHorizontal();
