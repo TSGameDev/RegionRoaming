@@ -117,24 +117,19 @@ public class RegionEditor : Editor
 
                 GUILayout.Label(preset);
 
-                DisplayLoadRemoveButtons();
+                if (GUILayout.Button("Load Preset", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    RM.presets.TryGetValue(preset, out targetRegion.Vertices);
+                }
+
+                if (GUILayout.Button("Remove Preset", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    RM.presets.Remove(preset);
+                    break;
+                }
 
                 EditorGUILayout.EndHorizontal();
             }
-        }
-    }
-
-    private void DisplayLoadRemoveButtons()
-    {
-        if (GUILayout.Button("Load Preset", GUILayout.Width(100), GUILayout.Height(20)))
-        {
-            RM.presets.TryGetValue(preset, out targetRegion.Vertices);
-        }
-
-        if (GUILayout.Button("Remove Preset", GUILayout.Width(100), GUILayout.Height(20)))
-        {
-            RM.presets.Remove(preset);
-            break;
         }
     }
     
