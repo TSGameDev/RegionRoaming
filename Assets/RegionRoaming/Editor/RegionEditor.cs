@@ -94,7 +94,7 @@ public class RegionEditor : Editor
     {
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Corner"))
-            targetRegion.Vertices.Add(new Vector3(0, 0, 0));
+            targetRegion.Vertices.Add(new Vector3(0, 0, 1));
 
         if (GUILayout.Button("Add to Presets"))
         {
