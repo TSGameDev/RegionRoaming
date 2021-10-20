@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using TriangleNet;
 using TriangleNet.Geometry;
 using TriangleNet.Topology;
 
@@ -49,7 +47,7 @@ namespace RegionRoaming.Mathematics
         public static ICollection<Triangle> Triangulate(IEnumerable<Vector2> points)
         {
             var poly = new Polygon();
-            poly.Add(new Contour(points.Select(p => p.ToVertex()));
+            poly.Add(new Contour(points.Select(p => p.ToVertex())));
             var mesh = poly.Triangulate();
             return mesh.Triangles;
         }

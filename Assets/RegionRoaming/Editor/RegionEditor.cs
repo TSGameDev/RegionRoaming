@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -214,9 +213,7 @@ public class RegionEditor : Editor
     {
         EditorGUI.BeginChangeCheck();
         if (regionManager == null)
-        {
             regionManager = new GameObject("Region Manager", typeof(RegionManager));
-        }
         EditorGUI.EndChangeCheck();
 
         GameObject newRegion = new GameObject("New Region", typeof(Region));
