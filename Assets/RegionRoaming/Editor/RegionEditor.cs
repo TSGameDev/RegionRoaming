@@ -7,12 +7,16 @@ using RegionRoaming;
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
 {
-    static GameObject regionManager = null;
-    Region targetRegion;
-    RegionManager RM;
-    string presetName = "Enter Preset Name!";
+    #region Variables 
 
-    //chagnes the inspector for the region script
+    string presetName = "Enter Preset Name!";
+    static GameObject regionManager = null;
+    RegionManager RM;
+    Region targetRegion;
+
+    #endregion
+
+    //Update function for custom inspectors
     public override void OnInspectorGUI()
     {
         SetVariables();
@@ -24,30 +28,37 @@ public class RegionEditor : Editor
         DisplayPresets();
     }
 
+    #region ONInspectorGUIFunctions
+
+    //Gets and sets the required vriables for the custom inspector to work
     private void SetVariables()
     {
         targetRegion = target as Region;
-        if (RM == null)
+        if (RM == null && regionManager != null)
             RM = regionManager.GetComponent<RegionManager>();
     }
 
+    //Adds a title to the inspector and adds the functionalit of being able to undo changes to the inspector with Ctr Z.
     private void TitleAndUndo()
     {
         GUILayout.Label("Corners");
         Undo.RecordObject(targetRegion, "Changed Region Settings");
     }
 
+    //calls the function for displaying the float field for each vert alongside creating a removal button for each vert within the list. If there are any changes sets them to the correct vert.
     private void DisplayVerts()
     {
         for (int i = 0; i < targetRegion.Vertices.Count; i++)
         {
             GUILayout.Label($"Element {i}:");
 
+            //makes all drawn UI in horizontal to each other instead of verticel. also check for changes to be assigned back to the vert.
             EditorGUILayout.BeginHorizontal(GUILayout.MaxHeight(10f));
             EditorGUI.BeginChangeCheck();
 
             Vector3 temp = DisplayVector3(i);
 
+            //create a button called X which will remove the vert its next to
             if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(20)))
             {
                 targetRegion.Vertices.RemoveAt(i);
@@ -61,6 +72,7 @@ public class RegionEditor : Editor
         }
     }
 
+    //the function responsible for drawing the vert float feilds called in the DisplayVerts function.
     private Vector3 DisplayVector3(int index)
     {
         GUILayout.Label("X: ");
@@ -75,21 +87,24 @@ public class RegionEditor : Editor
         return new Vector3(x, y, z);
     }
 
+    //Displays all preset related information alongside the button for adding a new vert to the list
     private void DisplayPresets()
     {
         AddCornerPresetButtons();
 
         EditorGUILayout.EndHorizontal();
         EditorGUI.BeginChangeCheck();
-
+        //creates a text field, used for preset names
         presetName = EditorGUILayout.TextField(presetName);
 
+        //makes some space between elements in the inspector
         EditorGUILayout.Space(10);
         EditorGUI.EndChangeCheck();
 
         DisplayAvailablePresets();
     }
 
+    //Adds the two buttons for adding another vert to the list of the region and adding the current vert amount/location to a preset for later use.
     private void AddCornerPresetButtons()
     {
         EditorGUILayout.BeginHorizontal();
@@ -107,6 +122,7 @@ public class RegionEditor : Editor
         }
     }
 
+    //displays the name of all avaliable presets alongside two buttons for loading and removing that preset
     private void DisplayAvailablePresets()
     {
         if (RM.presets != null)
@@ -132,19 +148,22 @@ public class RegionEditor : Editor
             }
         }
     }
-    
+
+    #endregion
+
     private void OnSceneGUI()
     {
-        targetRegion = target as Region;
-
+        //makes a the handle of the gameobject each to its transform
         Transform handleTransform = targetRegion.transform;
         
+        //creates a new list of vecotr3s
         List<Vector3> vertTransforms = new List<Vector3>();
 
+        //foreach element in the region list, adds it to the new list
         foreach(Vector3 vert in targetRegion.Vertices)
             vertTransforms.Add(handleTransform.TransformPoint(vert));
 
-        
+        //changes the line color of any draws to white
         Handles.color = Color.white;
 
        
@@ -160,7 +179,10 @@ public class RegionEditor : Editor
         }
     }
 
-     private void ConnectRegionPoints(List<Vector3> verts, int index)
+    #region OnSceneGUIFunctions
+
+    //For each vert in the region, draws a line from itself to the next one in the list. If there isn't one, connects to the beginning of the list to complete the loop
+    private void ConnectRegionPoints(List<Vector3> verts, int index)
     {
         if (index == verts.Count - 1)
             Handles.DrawLine(verts[index], verts[0]);
@@ -168,6 +190,8 @@ public class RegionEditor : Editor
             Handles.DrawLine(verts[index], verts[index + 1]);
     }
 
+
+    //Makes each vert move responding to the handles functionality and makes the handle move along with the vert as well.
     private Vector3 HandleFunctionaity(Region target, int index)
     {
         Vector3 corner = target.transform.TransformPoint(target.Vertices[index]);
@@ -181,7 +205,10 @@ public class RegionEditor : Editor
         }
         return corner;
     }
-    
+
+    #endregion
+
+    //Creates a menu item that spawns a region under a region manager if there is one. If not makes one. Doesn't assing the Region manager script here due to bugs if that script reference is static
     [MenuItem("Region Roaming/Create Region", false, 10)]
     private static void CreateRegion()
     {
