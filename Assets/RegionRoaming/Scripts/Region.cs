@@ -8,26 +8,30 @@ namespace RegionRoaming
 {
     public class Region : MonoBehaviour
     {
+        #region Variables
+
         public List<Vector3> Vertices = new List<Vector3>()
         { new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1) };
 
         private List<Triangle> triangles;
         private double areaSum;
 
+        #endregion
+
         private void Awake()
         {
+            //makes triangles a new list, called the triangulate function on the vertices and stores every triangle.
             triangles = new List<Triangle>();
             triangles.AddRange(RegionMathematics.Triangulate(Vertices));
+            //makes area sum equal to 0. Calculates each triangles area and adds that to areasum
             areaSum = 0f;
             triangles.ForEach(x => areaSum += x.TriArea());
-
-            foreach(var tri in triangles)
-            {
-                var points = tri.ToVertexList().Select(points => new Vector3(points.x, 0f, points.y)).ToList();
-                points.Add(points[0]);
-            }
         }
 
+        /// <summary>
+        /// Returns a random Vector3 position from within the referenced region
+        /// </summary>
+        /// <returns>Returns a random Vector3</returns>
         public Vector3 PickRandomLocation()
         {
             var tri = PickRandomTriangle();
@@ -35,6 +39,7 @@ namespace RegionRoaming
             return new Vector3(randomPos.x, 0f, randomPos.y);
         }
 
+        //Picks a random triangle within the region using area-bias
         private Triangle PickRandomTriangle()
         {
             var range = Random.Range(0f, (float)areaSum);
@@ -47,6 +52,7 @@ namespace RegionRoaming
             throw new System.Exception("Should not get here.");
         }
 
+        //picks a random point within the passed in triangle
         private Vector2 RandomWithinTriangle(Triangle t)
         {
             var range1 = Mathf.Sqrt(Random.Range(0f, 1f));
