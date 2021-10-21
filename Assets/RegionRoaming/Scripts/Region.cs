@@ -29,9 +29,9 @@ namespace RegionRoaming
         }
 
         /// <summary>
-        /// Returns a random Vector3 position from within the referenced region
+        /// Returns a random Vector3 position in the sense of a 2D plane from within the region. (The Y parameter is always 0, using [Insert Raycast version name here] if casting to a ground is required).
         /// </summary>
-        /// <returns>Returns a random Vector3</returns>
+        /// <returns>Returns a random Vector3 without a Y parameter</returns>
         public Vector3 PickRandomLocation()
         {
             var tri = PickRandomTriangle();

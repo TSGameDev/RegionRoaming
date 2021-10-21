@@ -15,6 +15,11 @@ public class RegionEditor : Editor
 
     #endregion
 
+    private void OnEnable()
+    {
+        SetVariables();
+    }
+
     //Update function for custom inspectors
     public override void OnInspectorGUI()
     {
@@ -33,8 +38,15 @@ public class RegionEditor : Editor
     private void SetVariables()
     {
         targetRegion = target as Region;
-        if (RM == null && regionManager != null)
+        if(RM == null && regionManager == null)
+        {
+            RM = FindObjectOfType<RegionManager>();
+            regionManager = RM.gameObject;
+        }
+        else if(RM == null && regionManager != null)
+        {
             RM = regionManager.GetComponent<RegionManager>();
+        }
     }
 
     //Adds a title to the inspector and adds the functionalit of being able to undo changes to the inspector with Ctr Z.
