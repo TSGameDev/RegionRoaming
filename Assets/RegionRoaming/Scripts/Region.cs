@@ -29,7 +29,7 @@ namespace RegionRoaming
         }
 
         /// <summary>
-        /// Returns a random Vector3 position in the sense of a 2D plane from within the region. (The Y parameter is always 0, using [Insert Raycast version name here] if casting to a ground is required).
+        /// Returns a random Vector3 position in the sense of a 2D plane from within the region. (The Y parameter is always 0, using PickRandomRaycastLocation if casting to a ground is required).
         /// </summary>
         /// <returns>Returns a random Vector3 without a Y parameter</returns>
         public Vector3 PickRandomLocation()
@@ -37,6 +37,51 @@ namespace RegionRoaming
             var tri = PickRandomTriangle();
             var randomPos = RandomWithinTriangle(tri);
             return new Vector3(randomPos.x, 0f, randomPos.y);
+        }
+
+        /// <summary>
+        /// Returns a random Vector3 position within the region using raycast to get the correct height of a terrain.
+        /// </summary>
+        /// <param name="terrainLayer">The terrain layermask</param>
+        /// <returns>A random vector3</returns>
+        public Vector3 PickRandomRaycastLocation(LayerMask terrainLayer)
+        {
+            var tri = PickRandomTriangle();
+            var randomPos = RandomWithinTriangle(tri);
+            Vector3 randomLocation = new Vector3(randomPos.x, 0f, randomPos.y);
+            RaycastHit hit;
+            Physics.Raycast(randomLocation, Vector3.down, out hit, 100f, terrainLayer);
+
+            if(hit.point == null)
+                Physics.Raycast(randomLocation, Vector3.up, out hit, 100f, terrainLayer);
+            else if(hit.point != null)
+                return hit.point;
+
+            return new Vector3(0, 0, 0);
+        }
+
+        /// <summary>
+        /// Returns a random Vector3 position within the region and maxheight for flying AI. The min height will be the terrain height
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 PickRandomFlightLocation(LayerMask terrainLayer, float maxHeight)
+        {
+            var tri = PickRandomTriangle();
+            var randomPos = RandomWithinTriangle(tri);
+            Vector3 randomLocation = new Vector3(randomPos.x, 0f, randomPos.y);
+            RaycastHit hit;
+            Physics.Raycast(randomLocation, Vector3.down, out hit, 100f, terrainLayer);
+
+            if (hit.point == null)
+                Physics.Raycast(randomLocation, Vector3.up, out hit, 100f, terrainLayer);
+
+            if (hit.point != null)
+            {
+                float newY = Random.Range(hit.point.y, maxHeight);
+                return new Vector3(hit.point.x, newY, hit.point.z);
+            }
+            else
+                throw new System.Exception("Hit.point is null or maxheight is less than terrain height");
         }
 
         //Picks a random triangle within the region using area-bias
@@ -69,7 +114,7 @@ namespace RegionRoaming
         }
 
         //A function to inistalise the script and its data for testing the region in the editor.
-        public void RegionEditorTest()
+        public void RegionEditorInistalisation()
         {
             //makes triangles a new list, called the triangulate function on the vertices and stores every triangle.
             triangles = new List<Triangle>();
