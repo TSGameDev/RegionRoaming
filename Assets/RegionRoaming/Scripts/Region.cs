@@ -39,6 +39,7 @@ namespace RegionRoaming
             return new Vector3(randomPos.x, 0f, randomPos.y);
         }
 
+        /*
         /// <summary>
         /// Returns a random Vector3 position within the region using raycast to get the correct height of a terrain.
         /// </summary>
@@ -49,15 +50,18 @@ namespace RegionRoaming
             var tri = PickRandomTriangle();
             var randomPos = RandomWithinTriangle(tri);
             Vector3 randomLocation = new Vector3(randomPos.x, 0f, randomPos.y);
+            Debug.Log(randomLocation.ToString());
             RaycastHit hit;
-            Physics.Raycast(randomLocation, Vector3.down, out hit, 100f, terrainLayer);
-
-            if(hit.point == null)
-                Physics.Raycast(randomLocation, Vector3.up, out hit, 100f, terrainLayer);
-            else if(hit.point != null)
+            if (Physics.Raycast(randomLocation, transform.TransformDirection(Vector3.up), out hit, 100f, terrainLayer))
+            {
                 return hit.point;
-
-            return new Vector3(0, 0, 0);
+            }
+            else if (Physics.Raycast(randomLocation, transform.TransformDirection(Vector3.down), out hit, 100f, terrainLayer))
+            {
+                return hit.point;
+            }
+            
+            throw new System.Exception("Ray didn't hit anything");
         }
 
         /// <summary>
@@ -83,6 +87,7 @@ namespace RegionRoaming
             else
                 throw new System.Exception("Hit.point is null or maxheight is less than terrain height");
         }
+        */
 
         //Picks a random triangle within the region using area-bias
         private Triangle PickRandomTriangle()

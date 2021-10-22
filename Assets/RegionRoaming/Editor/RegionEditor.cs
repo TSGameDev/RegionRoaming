@@ -9,17 +9,12 @@ public class RegionEditor : Editor
     #region Variables 
 
     string presetName = "Enter Preset Name!";
-    static GameObject regionManager = null;
+    static GameObject regionManager;
     RegionManager RM;
     Region targetRegion;
     int cubesToSpawn;
 
     #endregion
-
-    private void OnEnable()
-    {
-        SetVariables();
-    }
 
     //Update function for custom inspectors
     public override void OnInspectorGUI()
@@ -38,7 +33,7 @@ public class RegionEditor : Editor
     #region ONInspectorGUIFunctions
 
     //Gets and sets the required vriables for the custom inspector to work
-    private void SetVariables()
+    public void SetVariables()
     {
         targetRegion = target as Region;
         if(RM == null && regionManager == null)

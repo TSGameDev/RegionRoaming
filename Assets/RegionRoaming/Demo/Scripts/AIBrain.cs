@@ -9,27 +9,29 @@ public class AIBrain : MonoBehaviour
     NavMeshAgent agent;
     [SerializeField] Region region;
     GameObject targetCube;
+    [SerializeField] LayerMask terrainLayer;
 
     private void Awake()
     {
         targetCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         targetCube.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         agent = GetComponent<NavMeshAgent>();
-        CalculateNewPath();
+        //CalculateNewPath();
     }
 
     private void Update()
     {
         if(agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
-            CalculateNewPath();
+            //CalculateNewPath();
         }
     }
 
+    /*
     void CalculateNewPath()
     {
-        Vector3 destination = region.PickRandomLocation();
+        Vector3 destination = region.PickRandomRaycastLocation(terrainLayer);
         agent.SetDestination(destination);
         targetCube.transform.position = destination;
-    }
+    }*/
 }
