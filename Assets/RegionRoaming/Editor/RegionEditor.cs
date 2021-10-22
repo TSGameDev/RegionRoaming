@@ -33,7 +33,7 @@ public class RegionEditor : Editor
     #region ONInspectorGUIFunctions
 
     //Gets and sets the required vriables for the custom inspector to work
-    public void SetVariables()
+    private void SetVariables()
     {
         targetRegion = target as Region;
         if(RM == null && regionManager == null)
