@@ -12,6 +12,7 @@ public class RegionEditor : Editor
     static GameObject regionManager = null;
     RegionManager RM;
     Region targetRegion;
+    int cubesToSpawn;
 
     #endregion
 
@@ -30,6 +31,8 @@ public class RegionEditor : Editor
         DisplayVerts();
 
         DisplayPresets();
+
+        TestRegion();
     }
 
     #region ONInspectorGUIFunctions
@@ -232,4 +235,30 @@ public class RegionEditor : Editor
         newRegion.transform.parent = regionManager.transform;
     }
 
+    //A function that creates a method of testing the region without running in playmode.
+    private void TestRegion()
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUI.BeginChangeCheck();
+
+        cubesToSpawn = EditorGUILayout.IntField("Test Cube Num", cubesToSpawn);
+
+        EditorGUI.EndChangeCheck();
+
+        if(GUILayout.Button("Test Region"))
+        {
+            targetRegion.RegionEditorTest();
+            GameObject testCubeManager = new GameObject("Test Cube Manager");
+            for (int i = 0; i < cubesToSpawn; i++)
+            {
+                GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Vector3 destination = targetRegion.PickRandomLocation();
+                temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                temp.transform.position = destination;
+                temp.transform.parent = testCubeManager.transform;
+            }
+        }
+
+        EditorGUILayout.EndHorizontal();
+    }
 }

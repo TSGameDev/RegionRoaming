@@ -67,5 +67,16 @@ namespace RegionRoaming
 
             return (m1 * point1) + (m2 * point2) + (m3 * point3);
         }
+
+        //A function to inistalise the script and its data for testing the region in the editor.
+        public void RegionEditorTest()
+        {
+            //makes triangles a new list, called the triangulate function on the vertices and stores every triangle.
+            triangles = new List<Triangle>();
+            triangles.AddRange(RegionMathematics.Triangulate(Vertices));
+            //makes area sum equal to 0. Calculates each triangles area and adds that to areasum
+            areaSum = 0f;
+            triangles.ForEach(x => areaSum += x.TriArea());
+        }
     }
 }
