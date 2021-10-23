@@ -11,14 +11,14 @@ namespace RegionRoaming
         #region Variables
 
         public List<Vector3> Vertices = new List<Vector3>()
-        { new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1) };
+        { new Vector3(5, 0, 0), new Vector3(-5, 0, 0), new Vector3(0, 0, 5) };
 
         private List<Triangle> triangles;
         private double areaSum;
 
         #endregion
 
-        private void Awake()
+        public void Awake()
         {
             //makes triangles a new list, called the triangulate function on the vertices and stores every triangle.
             triangles = new List<Triangle>();
@@ -39,29 +39,24 @@ namespace RegionRoaming
             return new Vector3(randomPos.x, 0f, randomPos.y);
         }
 
-        /*
+
         /// <summary>
         /// Returns a random Vector3 position within the region using raycast to get the correct height of a terrain.
         /// </summary>
-        /// <param name="terrainLayer">The terrain layermask</param>
+        /// <param name="terrainLayerInt">The int for the layer the terrain is on</param>
+        /// <param name="maxTerrainHeight">The max heigh of the terrain within the region</param>
         /// <returns>A random vector3</returns>
-        public Vector3 PickRandomRaycastLocation(LayerMask terrainLayer)
+        public Vector3 PickRandomRaycastLocation(int terrainLayerInt, float maxTerrainHeight)
         {
             var tri = PickRandomTriangle();
             var randomPos = RandomWithinTriangle(tri);
-            Vector3 randomLocation = new Vector3(randomPos.x, 0f, randomPos.y);
-            Debug.Log(randomLocation.ToString());
-            RaycastHit hit;
-            if (Physics.Raycast(randomLocation, transform.TransformDirection(Vector3.up), out hit, 100f, terrainLayer))
+            LayerMask layer = 1 << terrainLayerInt;
+            if(Physics.Raycast(new Vector3(randomPos.x, maxTerrainHeight, randomPos.y), transform.TransformDirection(Vector3.down), out RaycastHit hit, Mathf.Infinity, layer))
             {
                 return hit.point;
             }
-            else if (Physics.Raycast(randomLocation, transform.TransformDirection(Vector3.down), out hit, 100f, terrainLayer))
-            {
-                return hit.point;
-            }
-            
-            throw new System.Exception("Ray didn't hit anything");
+
+            throw new System.Exception("Ray didn't hit");
         }
 
         /// <summary>
@@ -87,7 +82,6 @@ namespace RegionRoaming
             else
                 throw new System.Exception("Hit.point is null or maxheight is less than terrain height");
         }
-        */
 
         //Picks a random triangle within the region using area-bias
         private Triangle PickRandomTriangle()
@@ -130,3 +124,5 @@ namespace RegionRoaming
         }
     }
 }
+
+

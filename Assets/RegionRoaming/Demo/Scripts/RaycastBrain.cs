@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using RegionRoaming;
 
-public class AIBrain : MonoBehaviour
+public class RaycastBrain : MonoBehaviour
 {
     NavMeshAgent agent;
     [SerializeField] Region region;
     GameObject targetCube;
+    [SerializeField] int terrainLayer;
 
     private void Awake()
     {
@@ -20,15 +21,15 @@ public class AIBrain : MonoBehaviour
 
     private void Update()
     {
-        if(agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
         {
-            CalculateNewPath();
+             CalculateNewPath();
         }
     }
 
     void CalculateNewPath()
     {
-        Vector3 destination = region.PickRandomLocation();
+        Vector3 destination = region.PickRandomRaycastLocation(terrainLayer, 100f);
         agent.SetDestination(destination);
         targetCube.transform.position = destination;
     }

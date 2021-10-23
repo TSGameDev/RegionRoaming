@@ -162,6 +162,8 @@ public class RegionEditor : Editor
 
     private void OnSceneGUI()
     {
+        targetRegion = target as Region;
+
         //makes a the handle of the gameobject each to its transform
         Transform handleTransform = targetRegion.transform;
         
@@ -222,12 +224,19 @@ public class RegionEditor : Editor
     private static void CreateRegion()
     {
         EditorGUI.BeginChangeCheck();
-        if (regionManager == null)
+        RegionManager temp = GameObject.FindObjectOfType<RegionManager>();
+
+        if(temp != null)
+            regionManager = temp.gameObject;
+        else
             regionManager = new GameObject("Region Manager", typeof(RegionManager));
         EditorGUI.EndChangeCheck();
 
         GameObject newRegion = new GameObject("New Region", typeof(Region));
         newRegion.transform.parent = regionManager.transform;
+
+        Undo.RegisterCreatedObjectUndo(newRegion, $"Created {newRegion.name}");
+        Selection.activeObject = newRegion;
     }
 
     //A function that creates a method of testing the region without running in playmode.
