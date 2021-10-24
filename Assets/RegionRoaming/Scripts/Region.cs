@@ -30,46 +30,60 @@ namespace RegionRoaming
         }
 
         /// <summary>
-        /// Returns a random Vector3 position within the region using raycast to get the correct height of a terrain.
+        /// Returns a random Vector3 position within the region using raycast to get the correct height of a terrain. Requires a Terrain layer to be set please name it terrain or Terrain
         /// </summary>
-        /// <param name="terrainLayerInt">The int for the layer the terrain is on</param>
         /// <param name="maxTerrainHeight">The max heigh of the terrain within the region</param>
         /// <returns>A random vector3</returns>
-        public Vector3 PickRandomRaycastLocation(int terrainLayerInt, float maxTerrainHeight)
+        public Vector3 PickRandomRaycastLocation(float maxTerrainHeight)
         {
             var tri = PickRandomTriangle();
             var randomPos = RandomWithinTriangle(tri);
-            LayerMask layer = 1 << terrainLayerInt;
-            if(Physics.Raycast(new Vector3(randomPos.x, maxTerrainHeight, randomPos.y), transform.TransformDirection(Vector3.down), out RaycastHit hit, Mathf.Infinity, layer))
-            {
+
+            LayerMask layer = 1 << LayerMask.NameToLayer("Terrain");
+            LayerMask layerNoncase = 1 << LayerMask.NameToLayer("terrain");
+
+            if (Physics.Raycast(new Vector3(randomPos.x, maxTerrainHeight, randomPos.y), transform.TransformDirection(Vector3.down), out RaycastHit hit, Mathf.Infinity, layer))
                 return hit.point;
-            }
+            else if (Physics.Raycast(new Vector3(randomPos.x, maxTerrainHeight, randomPos.y), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerNoncase))
+                return hit.point;
 
             throw new System.Exception("Ray didn't hit");
         }
 
         /// <summary>
-        /// Returns a random Vector3 position within the region and maxheight for flying AI. The min height will be the terrain height
+        /// Gets a random point within the region with Y between the terrain height as chosen point and maxHeight. If the Y is better the terrainHeight and minheight, returns a Vector3 with Y as terrain height instead allowing for the AI to walk along the terrain.
         /// </summary>
-        /// <returns></returns>
-        public Vector3 PickRandomFlightLocation(LayerMask terrainLayer, float maxHeight)
+        /// <param name="maxTerrainHeight">The max height of the terrain within the region</param>
+        /// <param name="minHeight">The min the Y point needs to be for the AI to begin flying</param>
+        /// <param name="maxHeight">The max the Y point can be aka the max flying height of the AI</param>
+        /// <returns>A Vector3 at terrain level for walking or between minHeight and maxHeight for flying</returns>
+        public Vector3 PickRandomFlightLocation(float maxTerrainHeight, float minHeight, float maxHeight)
         {
             var tri = PickRandomTriangle();
             var randomPos = RandomWithinTriangle(tri);
-            Vector3 randomLocation = new Vector3(randomPos.x, 0f, randomPos.y);
-            RaycastHit hit;
-            Physics.Raycast(randomLocation, Vector3.down, out hit, 100f, terrainLayer);
 
-            if (hit.point == null)
-                Physics.Raycast(randomLocation, Vector3.up, out hit, 100f, terrainLayer);
+            LayerMask layer = 1 << LayerMask.NameToLayer("Terrain");
+            LayerMask layerNoncase = 1 << LayerMask.NameToLayer("terrain");
+            Vector3 raycastHit;
 
-            if (hit.point != null)
+            if (Physics.Raycast(new Vector3(randomPos.x, maxTerrainHeight, randomPos.y), transform.TransformDirection(Vector3.down), out RaycastHit hit, Mathf.Infinity, layer))
+                raycastHit = hit.point;
+            else if (Physics.Raycast(new Vector3(randomPos.x, maxTerrainHeight, randomPos.y), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerNoncase))
+                raycastHit = hit.point;
+            else
+                throw new System.Exception("No Terrain/terrain layer or region point not on a terrain object");
+
+            float newY = Random.Range(raycastHit.y, maxHeight);
+            float heightDifference = newY - raycastHit.y;
+
+            if(heightDifference < minHeight)
             {
-                float newY = Random.Range(hit.point.y, maxHeight);
-                return new Vector3(hit.point.x, newY, hit.point.z);
+                return raycastHit;
             }
             else
-                throw new System.Exception("Hit.point is null or maxheight is less than terrain height");
+            {
+                return new Vector3(raycastHit.x, newY, raycastHit.z);
+            }
         }
 
         //Picks a random triangle within the region using area-bias
