@@ -7,7 +7,7 @@ public class FlightBrain : MonoBehaviour
 {
     [SerializeField] Region region;
     [SerializeField] float speed;
-    float stoppingDistance = 0.5f;
+    float nextCheckDistance = 0.5f;
     GameObject targetCube;
     Vector3 destination;
 
@@ -21,7 +21,7 @@ public class FlightBrain : MonoBehaviour
     private void Update()
     {
         float distanceRemaining = Vector3.Distance(destination, transform.position);
-        if(distanceRemaining <= stoppingDistance)
+        if(distanceRemaining <= nextCheckDistance)
         {
             CalculateNewPath();
         }

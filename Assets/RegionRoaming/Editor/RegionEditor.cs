@@ -8,15 +8,18 @@ using UnityEngine.Events;
 public class RegionEditor : Editor
 {
     #region Variables 
-
-    string presetName = "Enter Preset Name!";
-    static GameObject regionManager;
-    RegionManager RM;
+    //Required Variables
     Region targetRegion;
+    RegionManager RM;
+    static GameObject regionManager;
+
+    //Preset Required Variables
+    string presetName;
+    
+    //Testing Variables
     int cubesToSpawn;
     bool raycastRegion = false;
     bool flightRegion = false;
-    float maxTestTerrainHeight;
     float minTestFlyingHeight;
     float maxTestFlyingHeight;
 
@@ -74,7 +77,7 @@ public class RegionEditor : Editor
             Vector3 temp = DisplayVector3(i);
 
             //create a button called X which will remove the vert its next to
-            if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(20)))
+            if (GUILayout.Button(new GUIContent("X", "Remove Corner"), GUILayout.Width(20), GUILayout.Height(20)))
             {
                 targetRegion.Vertices.RemoveAt(i);
                 break;
@@ -90,6 +93,7 @@ public class RegionEditor : Editor
     //the function responsible for drawing the vert float feilds called in the DisplayVerts function.
     private Vector3 DisplayVector3(int index)
     {
+        //Creates a label for the position name and a field to enter a new float
         GUILayout.Label("X: ");
         float x = EditorGUILayout.FloatField(targetRegion.Vertices[index].x);
 
@@ -110,7 +114,7 @@ public class RegionEditor : Editor
         EditorGUILayout.EndHorizontal();
         EditorGUI.BeginChangeCheck();
         //creates a text field, used for preset names
-        presetName = EditorGUILayout.TextField(presetName);
+        presetName = EditorGUILayout.TextField(new GUIContent("Preset Name", "The name you wish for the preset to be saved as") ,presetName);
 
         //makes some space between elements in the inspector
         EditorGUILayout.Space(10);
@@ -122,11 +126,13 @@ public class RegionEditor : Editor
     //Adds the two buttons for adding another vert to the list of the region and adding the current vert amount/location to a preset for later use.
     private void AddCornerPresetButtons()
     {
+        //adds a button to make a new corner
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Add Corner"))
+        if (GUILayout.Button(new GUIContent("Add Corner", "Create an additional corner for the region")))
             targetRegion.Vertices.Add(new Vector3(0, 0, 1));
 
-        if (GUILayout.Button("Add to Presets"))
+        //add a button to add the current corner layout to a preset
+        if (GUILayout.Button(new GUIContent("Add To Presets", "Adds the current amount and layout of corners to a preset for future loading")))
         {
             List<Vector3> temp = new List<Vector3>();
             for (int i = 0; i < targetRegion.Vertices.Count; i++)
@@ -229,6 +235,7 @@ public class RegionEditor : Editor
     [MenuItem("Region Roaming/Create Region", false, 10)]
     private static void CreateRegion()
     {
+        //finds or creates a new regionmanager and stores it
         EditorGUI.BeginChangeCheck();
         RegionManager temp = GameObject.FindObjectOfType<RegionManager>();
 
@@ -238,9 +245,11 @@ public class RegionEditor : Editor
             regionManager = new GameObject("Region Manager", typeof(RegionManager));
         EditorGUI.EndChangeCheck();
 
+        //creates a new region and assigns it to the region manager
         GameObject newRegion = new GameObject("New Region", typeof(Region));
         newRegion.transform.parent = regionManager.transform;
 
+        //makes Unity acknowledge the creation of the region for Undoing its creation. Also makes the selected object the newly created region.
         Undo.RegisterCreatedObjectUndo(newRegion, $"Created {newRegion.name}");
         Selection.activeObject = newRegion;
     }
@@ -252,6 +261,7 @@ public class RegionEditor : Editor
     {
         TestingSettings();
 
+        //Adds space in the inspector
         GUILayout.Space(10);
 
         TestingFunctionality();
@@ -261,19 +271,20 @@ public class RegionEditor : Editor
     private void TestingSettings()
     {
         EditorGUI.BeginChangeCheck();
-
+        //displays a warning if both toggles are active
         if (raycastRegion && flightRegion)
         {
             EditorGUILayout.HelpBox("Region can not be Raycast and Flight region! Please pick one.", MessageType.Warning);
         }
 
         EditorGUILayout.BeginHorizontal();
-
+        //displays both bools as a toggle with a name and tooltip
         raycastRegion = EditorGUILayout.Toggle(new GUIContent("Is Raycast Region?", "Will the region use raycasts to return Vector3s relative to terrain height?"), raycastRegion);
         flightRegion = EditorGUILayout.Toggle(new GUIContent("Is Flight Region", "Will the region return Vector3s that are in the air?"), flightRegion);
 
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
+        //if the flight region toogle is true, displays float fields to enter additional required information for testing
         if (flightRegion)
         {
             minTestFlyingHeight = EditorGUILayout.FloatField(new GUIContent("Min Flying Height", "The minimum distance from the ground for the AI to fly."), minTestFlyingHeight);
@@ -285,16 +296,19 @@ public class RegionEditor : Editor
     //Displays and calls the testing functionality
     private void TestingFunctionality()
     {
+        //displays a warning if the number of cubes to spawn is 75 or more
         if (cubesToSpawn >= 75)
         {
             EditorGUILayout.HelpBox("The test function spawns gameobjects, having a high number could cause crashes or problems.", MessageType.Warning);
         }
 
+        //displays an int field to input the amount of cubes to spawn
         EditorGUILayout.BeginHorizontal();
         cubesToSpawn = EditorGUILayout.IntField(new GUIContent("Number of Test Cubes", "The amount of cubes to spawn during the testing of this region. USE CAREFULLY!"), cubesToSpawn);
 
         EditorGUI.EndChangeCheck();
 
+        //creates a button for calling the function to spawn the cubes in for testing the region
         if (GUILayout.Button("Test Region"))
         {
             TestCubeSpawning();
@@ -306,9 +320,11 @@ public class RegionEditor : Editor
     //spawns the test cubes relative to the type of region the user has selected.
     private void TestCubeSpawning()
     {
+        //makes all the region variables inistalisationed for testing and creates a single gameobject to store all created cubes in for ease of deletion
         targetRegion.RegionInistalisation();
         GameObject testCubeManager = new GameObject("Test Cube Manager");
 
+        //creates the amount of cubes entered and assigns their position to the ranomd location defined by the toggled region type. Makes the parent of the spawned cube to cube manager.
         for (int i = 0; i < cubesToSpawn; i++)
         {
             GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
