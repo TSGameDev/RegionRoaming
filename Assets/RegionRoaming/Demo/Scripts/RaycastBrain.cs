@@ -29,7 +29,7 @@ public class RaycastBrain : MonoBehaviour
 
     void CalculateNewPath()
     {
-        Vector3 destination = region.PickRandomRaycastLocation(100f);
+        Vector3 destination = region.PickRandomRaycastLocation();
         agent.SetDestination(destination);
         targetCube.transform.position = destination;
     }

@@ -245,12 +245,24 @@ public class RegionEditor : Editor
         Selection.activeObject = newRegion;
     }
 
+    #region TestingFunctions
+
     //A function that creates a method of testing the region without running in playmode.
     private void TestRegion()
     {
+        TestingSettings();
+
+        GUILayout.Space(10);
+
+        TestingFunctionality();
+    }
+
+    //provides the settings for the region based around the different functions.
+    private void TestingSettings()
+    {
         EditorGUI.BeginChangeCheck();
 
-        if(raycastRegion && flightRegion)
+        if (raycastRegion && flightRegion)
         {
             EditorGUILayout.HelpBox("Region can not be Raycast and Flight region! Please pick one.", MessageType.Warning);
         }
@@ -261,64 +273,59 @@ public class RegionEditor : Editor
         flightRegion = EditorGUILayout.Toggle(new GUIContent("Is Flight Region", "Will the region return Vector3s that are in the air?"), flightRegion);
 
         EditorGUILayout.EndHorizontal();
-
-        if(raycastRegion || flightRegion)
+        EditorGUILayout.BeginHorizontal();
+        if (flightRegion)
         {
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Max Terrain Height");
-            maxTestTerrainHeight = EditorGUILayout.FloatField(maxTestTerrainHeight);
-            if(flightRegion)
-            {
-                GUILayout.Label("Min Flying Height");
-                minTestFlyingHeight = EditorGUILayout.FloatField(minTestFlyingHeight);
-                GUILayout.Label("Max Flying Height");
-                maxTestFlyingHeight = EditorGUILayout.FloatField(maxTestFlyingHeight);
-            }
-            EditorGUILayout.EndHorizontal();
+            minTestFlyingHeight = EditorGUILayout.FloatField(new GUIContent("Min Flying Height", "The minimum distance from the ground for the AI to fly."), minTestFlyingHeight);
+            maxTestFlyingHeight = EditorGUILayout.FloatField(new GUIContent("Max Flying Height", "The maximum distance from the ground the AI will fly."), maxTestFlyingHeight);
+        }
+        EditorGUILayout.EndHorizontal();
+    }
+
+    //Displays and calls the testing functionality
+    private void TestingFunctionality()
+    {
+        if (cubesToSpawn >= 75)
+        {
+            EditorGUILayout.HelpBox("The test function spawns gameobjects, having a high number could cause crashes or problems.", MessageType.Warning);
         }
 
-        GUILayout.Space(10);
         EditorGUILayout.BeginHorizontal();
-        cubesToSpawn = EditorGUILayout.IntField("Test Cube Num", cubesToSpawn);
+        cubesToSpawn = EditorGUILayout.IntField(new GUIContent("Number of Test Cubes", "The amount of cubes to spawn during the testing of this region. USE CAREFULLY!"), cubesToSpawn);
 
         EditorGUI.EndChangeCheck();
 
-        if(GUILayout.Button("Test Region"))
+        if (GUILayout.Button("Test Region"))
         {
-            targetRegion.RegionInistalisation();
-            GameObject testCubeManager = new GameObject("Test Cube Manager");
-            if (raycastRegion == true)
-            {
-                for (int i = 0; i < cubesToSpawn; i++)
-                {
-                    GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    Vector3 destination = targetRegion.PickRandomRaycastLocation(maxTestTerrainHeight);
-                    temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                    temp.transform.position = destination;
-                    temp.transform.parent = testCubeManager.transform;
-                }
-            }
-            else if(flightRegion == true)
-            {
-                GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Vector3 destination = targetRegion.PickRandomFlightLocation(maxTestTerrainHeight, minTestFlyingHeight, maxTestFlyingHeight);
-                temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                temp.transform.position = destination;
-                temp.transform.parent = testCubeManager.transform;
-            }
-            else
-            {
-                for (int i = 0; i < cubesToSpawn; i++)
-                {
-                    GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    Vector3 destination = targetRegion.PickRandomLocation();
-                    temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                    temp.transform.position = destination;
-                    temp.transform.parent = testCubeManager.transform;
-                }
-            }
+            TestCubeSpawning();
         }
 
         EditorGUILayout.EndHorizontal();
     }
+
+    //spawns the test cubes relative to the type of region the user has selected.
+    private void TestCubeSpawning()
+    {
+        targetRegion.RegionInistalisation();
+        GameObject testCubeManager = new GameObject("Test Cube Manager");
+
+        for (int i = 0; i < cubesToSpawn; i++)
+        {
+            GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Vector3 destination;
+
+            if (raycastRegion)
+                destination = targetRegion.PickRandomRaycastLocation();
+            else if(flightRegion)
+                destination = targetRegion.PickRandomFlightLocation(minTestFlyingHeight, maxTestFlyingHeight);
+            else
+                destination = targetRegion.PickRandomLocation();
+            
+            temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            temp.transform.position = destination;
+            temp.transform.parent = testCubeManager.transform;
+        }
+    }
+
+    #endregion
 }

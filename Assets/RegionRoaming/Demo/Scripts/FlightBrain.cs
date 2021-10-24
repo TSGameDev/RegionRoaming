@@ -32,7 +32,7 @@ public class FlightBrain : MonoBehaviour
 
     void CalculateNewPath()
     {
-        destination = region.PickRandomFlightLocation(15f, 2f, 10f);
+        destination = region.PickRandomFlightLocation(2f, 10f);
         targetCube.transform.position = destination;
     }
 }
