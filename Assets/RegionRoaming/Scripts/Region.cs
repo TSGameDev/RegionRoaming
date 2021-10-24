@@ -15,6 +15,8 @@ namespace RegionRoaming
 
         private List<Triangle> triangles;
         private double areaSum;
+        private LayerMask layer;
+        private LayerMask layerNoncase;
 
         #endregion
 
@@ -37,16 +39,7 @@ namespace RegionRoaming
         {
             var tri = PickRandomTriangle();
             var randomPos = RandomWithinTriangle(tri);
-
-            LayerMask layer = 1 << LayerMask.NameToLayer("Terrain");
-            LayerMask layerNoncase = 1 << LayerMask.NameToLayer("terrain");
-
-            if (Physics.Raycast(new Vector3(randomPos.x, 1000f, randomPos.y), transform.TransformDirection(Vector3.down), out RaycastHit hit, Mathf.Infinity, layer))
-                return hit.point;
-            else if (Physics.Raycast(new Vector3(randomPos.x, 1000f, randomPos.y), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerNoncase))
-                return hit.point;
-
-            throw new System.Exception("Ray didn't hit");
+            return TerrainCast(randomPos);
         }
 
         /// <summary>
@@ -59,17 +52,7 @@ namespace RegionRoaming
         {
             var tri = PickRandomTriangle();
             var randomPos = RandomWithinTriangle(tri);
-
-            LayerMask layer = 1 << LayerMask.NameToLayer("Terrain");
-            LayerMask layerNoncase = 1 << LayerMask.NameToLayer("terrain");
-            Vector3 raycastHit;
-
-            if (Physics.Raycast(new Vector3(randomPos.x, 1000f, randomPos.y), transform.TransformDirection(Vector3.down), out RaycastHit hit, Mathf.Infinity, layer))
-                raycastHit = hit.point;
-            else if (Physics.Raycast(new Vector3(randomPos.x, 1000f, randomPos.y), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerNoncase))
-                raycastHit = hit.point;
-            else
-                throw new System.Exception("No Terrain/terrain layer or region point not on a terrain object");
+            Vector3 raycastHit = TerrainCast(randomPos);
 
             float newY = Random.Range(raycastHit.y, maxFlyingHeight);
             float heightDifference = newY - raycastHit.y;
@@ -96,6 +79,17 @@ namespace RegionRoaming
                 range -= triangles[i].TriArea();
             }
             throw new System.Exception("Should not get here.");
+        }
+
+        //casts a ray from 1000y down to the terrain
+        private Vector3 TerrainCast(Vector2 pos)
+        {
+            if (Physics.Raycast(new Vector3(pos.x, 1000f, pos.y), transform.TransformDirection(Vector3.down), out RaycastHit hit, Mathf.Infinity, layer))
+                return hit.point;
+            else if (Physics.Raycast(new Vector3(pos.x, 1000f, pos.y), transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerNoncase))
+                return hit.point;
+            else
+                throw new System.Exception("No Terrain/terrain layer or region point not on a terrain object");
         }
 
         //picks a random point within the passed in triangle
@@ -125,6 +119,8 @@ namespace RegionRoaming
             //makes area sum equal to 0. Calculates each triangles area and adds that to areasum
             areaSum = 0f;
             triangles.ForEach(x => areaSum += x.TriArea());
+            layer = 1 << LayerMask.NameToLayer("Terrain");
+            layerNoncase = 1 << LayerMask.NameToLayer("terrain");
         }
     }
 }
