@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using RegionRoaming;
+using UnityEngine.Events;
 
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
@@ -13,6 +14,11 @@ public class RegionEditor : Editor
     RegionManager RM;
     Region targetRegion;
     int cubesToSpawn;
+    bool raycastRegion = false;
+    bool flightRegion = false;
+    float maxTestTerrainHeight;
+    float minTestFlyingHeight;
+    float maxTestFlyingHeight;
 
     #endregion
 
@@ -242,9 +248,37 @@ public class RegionEditor : Editor
     //A function that creates a method of testing the region without running in playmode.
     private void TestRegion()
     {
-        EditorGUILayout.BeginHorizontal();
         EditorGUI.BeginChangeCheck();
 
+        if(raycastRegion && flightRegion)
+        {
+            EditorGUILayout.HelpBox("Region can not be Raycast and Flight region! Please pick one.", MessageType.Warning);
+        }
+
+        EditorGUILayout.BeginHorizontal();
+
+        raycastRegion = EditorGUILayout.Toggle(new GUIContent("Is Raycast Region?", "Will the region use raycasts to return Vector3s relative to terrain height?"), raycastRegion);
+        flightRegion = EditorGUILayout.Toggle(new GUIContent("Is Flight Region", "Will the region return Vector3s that are in the air?"), flightRegion);
+
+        EditorGUILayout.EndHorizontal();
+
+        if(raycastRegion || flightRegion)
+        {
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label("Max Terrain Height");
+            maxTestTerrainHeight = EditorGUILayout.FloatField(maxTestTerrainHeight);
+            if(flightRegion)
+            {
+                GUILayout.Label("Min Flying Height");
+                minTestFlyingHeight = EditorGUILayout.FloatField(minTestFlyingHeight);
+                GUILayout.Label("Max Flying Height");
+                maxTestFlyingHeight = EditorGUILayout.FloatField(maxTestFlyingHeight);
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
+        GUILayout.Space(10);
+        EditorGUILayout.BeginHorizontal();
         cubesToSpawn = EditorGUILayout.IntField("Test Cube Num", cubesToSpawn);
 
         EditorGUI.EndChangeCheck();
@@ -253,13 +287,35 @@ public class RegionEditor : Editor
         {
             targetRegion.RegionInistalisation();
             GameObject testCubeManager = new GameObject("Test Cube Manager");
-            for (int i = 0; i < cubesToSpawn; i++)
+            if (raycastRegion == true)
+            {
+                for (int i = 0; i < cubesToSpawn; i++)
+                {
+                    GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    Vector3 destination = targetRegion.PickRandomRaycastLocation(maxTestTerrainHeight);
+                    temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                    temp.transform.position = destination;
+                    temp.transform.parent = testCubeManager.transform;
+                }
+            }
+            else if(flightRegion == true)
             {
                 GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Vector3 destination = targetRegion.PickRandomLocation();
+                Vector3 destination = targetRegion.PickRandomFlightLocation(maxTestTerrainHeight, minTestFlyingHeight, maxTestFlyingHeight);
                 temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 temp.transform.position = destination;
                 temp.transform.parent = testCubeManager.transform;
+            }
+            else
+            {
+                for (int i = 0; i < cubesToSpawn; i++)
+                {
+                    GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    Vector3 destination = targetRegion.PickRandomLocation();
+                    temp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                    temp.transform.position = destination;
+                    temp.transform.parent = testCubeManager.transform;
+                }
             }
         }
 
