@@ -251,7 +251,7 @@ public class RegionEditor : Editor
 
         if(GUILayout.Button("Test Region"))
         {
-            targetRegion.RegionEditorInistalisation();
+            targetRegion.RegionInistalisation();
             GameObject testCubeManager = new GameObject("Test Cube Manager");
             for (int i = 0; i < cubesToSpawn; i++)
             {

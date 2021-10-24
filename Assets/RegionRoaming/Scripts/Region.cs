@@ -18,16 +18,6 @@ namespace RegionRoaming
 
         #endregion
 
-        public void Awake()
-        {
-            //makes triangles a new list, called the triangulate function on the vertices and stores every triangle.
-            triangles = new List<Triangle>();
-            triangles.AddRange(RegionMathematics.Triangulate(Vertices));
-            //makes area sum equal to 0. Calculates each triangles area and adds that to areasum
-            areaSum = 0f;
-            triangles.ForEach(x => areaSum += x.TriArea());
-        }
-
         /// <summary>
         /// Returns a random Vector3 position in the sense of a 2D plane from within the region. (The Y parameter is always 0, using PickRandomRaycastLocation if casting to a ground is required).
         /// </summary>
@@ -38,7 +28,6 @@ namespace RegionRoaming
             var randomPos = RandomWithinTriangle(tri);
             return new Vector3(randomPos.x, 0f, randomPos.y);
         }
-
 
         /// <summary>
         /// Returns a random Vector3 position within the region using raycast to get the correct height of a terrain.
@@ -86,6 +75,7 @@ namespace RegionRoaming
         //Picks a random triangle within the region using area-bias
         private Triangle PickRandomTriangle()
         {
+            RegionInistalisation();
             var range = Random.Range(0f, (float)areaSum);
             for (int i = 0; i < triangles.Count; i++)
             {
@@ -112,8 +102,10 @@ namespace RegionRoaming
             return (m1 * point1) + (m2 * point2) + (m3 * point3);
         }
 
-        //A function to inistalise the script and its data for testing the region in the editor.
-        public void RegionEditorInistalisation()
+        /// <summary>
+        /// A function that performs tasks to inistalisate the region for randompoints to work. NO NEED TO CALL IN USER SCRIPTS
+        /// </summary>
+        public void RegionInistalisation()
         {
             //makes triangles a new list, called the triangulate function on the vertices and stores every triangle.
             triangles = new List<Triangle>();
