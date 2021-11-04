@@ -9,7 +9,6 @@ public class RaycastBrain : MonoBehaviour
     NavMeshAgent agent;
     [SerializeField] Region region;
     GameObject targetCube;
-    [SerializeField] int terrainLayer;
 
     private void Awake()
     {
