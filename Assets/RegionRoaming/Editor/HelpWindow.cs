@@ -9,6 +9,7 @@ public class HelpWindow : EditorWindow
     private Texture2D logo = null;
     private string wikiURL = "https://github.com/TSGameDev/RegionRoaming/wiki/1---Introduction";
     private string triangleNETForkURL = "https://github.com/Geri-Borbas/Triangle.NET";
+    private string twitterURL = "https://twitter.com/TSGame_Dev";
     GUIStyle titleText;
 
     float leftSectionX = 50f;
@@ -157,7 +158,7 @@ public class HelpWindow : EditorWindow
         #region Documentation and Support
 
         GUILayout.BeginVertical();
-        GUILayout.BeginArea(new Rect(rightSectionX, 500f, sectionSizeWidth, sectionSizeHeight+50));
+        GUILayout.BeginArea(new Rect(rightSectionX, 500f, sectionSizeWidth, sectionSizeHeight + 80));
 
         GUILayout.Label("Documentation and Support", titleText);
 
@@ -174,6 +175,13 @@ public class HelpWindow : EditorWindow
         GUILayout.Space(10);
 
         GUILayout.Label($"The README is contained within the file you downloaded from GitHub {Environment.NewLine}and the Wiki is located at the Github. However, you can just click {Environment.NewLine}the Wiki button above to go there.");
+
+        GUILayout.Label($"This is a college project so updates might not happen, {Environment.NewLine}however feel free to send any bugs to my twitter.");
+        if (GUILayout.Button(new GUIContent("Twitter", "Opens the developers twitter page, send a message to report bugs."), GUILayout.Width(200f), GUILayout.Height(30f)))
+        {
+            Application.OpenURL(twitterURL);
+        }
+
         GUILayout.EndArea();
         GUILayout.EndVertical();
 
