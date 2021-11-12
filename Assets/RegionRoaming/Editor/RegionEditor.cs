@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using RegionRoaming;
-using UnityEngine.Events;
+using RegionRoaming.SavePresets;
 
 [CustomEditor(typeof(Region))]
 public class RegionEditor : Editor
@@ -121,6 +121,8 @@ public class RegionEditor : Editor
         EditorGUI.EndChangeCheck();
 
         DisplayAvailablePresets();
+
+        SaveLoadPresets();
     }
 
     //Adds the two buttons for adding another vert to the list of the region and adding the current vert amount/location to a preset for later use.
@@ -168,6 +170,45 @@ public class RegionEditor : Editor
                 EditorGUILayout.EndHorizontal();
             }
         }
+    }
+
+    private void SaveLoadPresets()
+    {
+        GUILayout.Space(10);
+        EditorGUILayout.BeginHorizontal();
+        
+        if(RM.presets != null)
+        {
+            if (GUILayout.Button(new GUIContent("Save Presets", "Saves the preset you have to a local file allowing them to presist through Unity closing")))
+            {
+                PresetSave.SavePresets(RM);
+            }
+
+            if (GUILayout.Button(new GUIContent("Load Presets", "Loads the presets you have save to a local file, returns an error if you don't have any saved data")))
+            {
+                PresetData data = PresetSave.LoadPresets();
+
+                List<string> presetName = data.presetName;
+                List<List<float[]>> corners = data.corners;
+                Dictionary<string, List<Vector3>> newPresets = new Dictionary<string, List<Vector3>>();
+
+                for (int i = 0; i < presetName.Count; i++)
+                {
+                    List<float[]> currentCorners = corners[i];
+                    List<Vector3> newCorners = new List<Vector3>();
+                    foreach(float[] singleCorner in currentCorners)
+                    {
+                        newCorners.Add(new Vector3(singleCorner[0], singleCorner[1], singleCorner[2]));
+                    }
+                    newPresets.Add(presetName[i], newCorners);
+                }
+
+                RM.presets = newPresets;
+            }
+        }
+
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Space(10);
     }
 
     #endregion
