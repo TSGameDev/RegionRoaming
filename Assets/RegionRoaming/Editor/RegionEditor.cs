@@ -15,6 +15,9 @@ public class RegionEditor : Editor
 
     //Preset Required Variables
     string presetName;
+    string testingPath;
+    bool hasSaved = true;
+    bool hasLoaded = false;
     
     //Testing Variables
     int cubesToSpawn;
@@ -24,6 +27,11 @@ public class RegionEditor : Editor
     float maxTestFlyingHeight;
 
     #endregion
+
+    private void OnEnable()
+    {
+        testingPath = Application.persistentDataPath + "/PresetData";
+    }
 
     //Update function for custom inspectors
     public override void OnInspectorGUI()
@@ -142,6 +150,7 @@ public class RegionEditor : Editor
                 temp.Add(targetRegion.Vertices[i]);
             }
             RM.presets.Add(presetName, temp);
+            hasSaved = false;
         }
     }
 
@@ -175,6 +184,17 @@ public class RegionEditor : Editor
     private void SaveLoadPresets()
     {
         GUILayout.Space(10);
+
+        if(testingPath != null && !hasLoaded)
+        {
+            EditorGUILayout.HelpBox("You have saved presets not loaded", MessageType.Warning);
+        }
+
+        if(!hasSaved)
+        {
+            EditorGUILayout.HelpBox("You have NOT saved your preset changes", MessageType.Warning);
+        }
+
         EditorGUILayout.BeginHorizontal();
         
         if(RM.presets != null)
@@ -182,6 +202,7 @@ public class RegionEditor : Editor
             if (GUILayout.Button(new GUIContent("Save Presets", "Saves the preset you have to a local file allowing them to presist through Unity closing")))
             {
                 PresetSave.SavePresets(RM);
+                hasSaved = true;
             }
 
             if (GUILayout.Button(new GUIContent("Load Presets", "Loads the presets you have save to a local file, returns an error if you don't have any saved data")))
@@ -204,6 +225,7 @@ public class RegionEditor : Editor
                 }
 
                 RM.presets = newPresets;
+                hasLoaded = true;
             }
         }
 
