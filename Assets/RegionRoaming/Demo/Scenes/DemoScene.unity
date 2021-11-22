@@ -167,9 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Vertices:
-  - {x: 5, y: 0, z: 0}
-  - {x: -5, y: 0, z: 0}
-  - {x: 0, y: 0, z: 5}
+  - {x: 37.84308, y: 0, z: -34.691933}
+  - {x: -34.466713, y: 0, z: -18.62429}
+  - {x: 0, y: 0, z: 43.813828}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ee695df793e0145b26b417e126bfe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  region: {fileID: 0}
+  region: {fileID: 546105877}
 --- !u!195 &1158647706
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -590,7 +590,7 @@ Terrain:
   m_GameObject: {fileID: 1745585604}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 775e115d51a1b1049afab210eeb215f7, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
