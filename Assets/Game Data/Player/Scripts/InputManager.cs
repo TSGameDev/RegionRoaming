@@ -4,34 +4,128 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private CameraConnector cameraConnector;
+    [SerializeField] private PlayerConnector playerConnector;
+
     private PlayerControls playerControls;
-    [SerializeField] private CameraController cameraController;
-    Player player;
+    private Player player;
 
     private void OnEnable()
     {
         playerControls = new PlayerControls();
-        cameraController = FindObjectOfType<CameraController>();
         player = GetComponent<Player>();
 
         playerControls.Enable();
 
         // Camera Controls
-        playerControls.Game.CameraMovement.performed += ctx => cameraController.cameraInput = ctx.ReadValue<Vector2>();
-        playerControls.Game.CameraMovement.canceled += ctx => cameraController.cameraInput = new Vector2();
-        playerControls.Game.CameraFastToggle.performed += ctx => cameraController.fastCamera = !cameraController.fastCamera;
-        playerControls.Game.CamerRotation.performed += ctx => cameraController.cameraRotation = ctx.ReadValue<float>();
-        playerControls.Game.CamerRotation.canceled += ctx => cameraController.cameraRotation = 0f;
-        playerControls.Game.CameraZoom.performed += ctx => cameraController.cameraZoom = ctx.ReadValue<float>();
-        playerControls.Game.CameraZoom.canceled += ctx => cameraController.cameraZoom = 0f;
-        playerControls.Game.CameraLock.performed += ctx => cameraController.lockCamera = !cameraController.lockCamera;
+        playerControls.Game.CameraMovement.performed += ctx => cameraConnector.cameraInput = ctx.ReadValue<Vector2>();
+        playerControls.Game.CameraMovement.canceled += ctx => cameraConnector.cameraInput = new Vector2();
+
+        playerControls.Game.CameraFastToggle.performed += ctx => cameraConnector.fastCamera = !cameraConnector.fastCamera;
+
+        playerControls.Game.CamerRotation.performed += ctx =>
+        {
+            float rotationValue = ctx.ReadValue<float>();
+            if (rotationValue >= 0.5f)
+            {
+                cameraConnector.cameraRotateRight = true;
+                cameraConnector.cameraRotateLeft = false;
+            }
+            else if (rotationValue <= -0.5f)
+            {
+                cameraConnector.cameraRotateLeft = true;
+                cameraConnector.cameraRotateRight = false;
+            }
+        };
+        playerControls.Game.CamerRotation.canceled += ctx => 
+        {
+            cameraConnector.cameraRotateLeft = false;
+            cameraConnector.cameraRotateRight = false;
+        };
+
+        playerControls.Game.CameraZoom.performed += ctx =>
+        {
+            float zoomValue = ctx.ReadValue<float>();
+            if(zoomValue > 1)
+            {
+                cameraConnector.cameraZoomIn = true;
+                cameraConnector.cameraZoomOut = false;
+            }
+
+            else if(zoomValue < -1)
+            {
+                cameraConnector.cameraZoomIn = false;
+                cameraConnector.cameraZoomOut = true;
+            }
+        };
+        playerControls.Game.CameraZoom.canceled += ctx =>
+        {
+            cameraConnector.cameraZoomIn = false;
+            cameraConnector.cameraZoomOut = false;
+        };
+
+        playerControls.Game.CameraLock.performed += ctx => cameraConnector.lockCamera = !cameraConnector.lockCamera;
 
         //Player Controls
         playerControls.Game.PlayerMove.performed += ctx => player.PlayerMove();
+
+        playerControls.Game.PlayerInteraction.performed += ctx => playerConnector.playerInteraction();
     }
 
     private void OnDisable()
     {
         playerControls.Disable();
+
+        // Camera Controls
+        playerControls.Game.CameraMovement.performed -= ctx => cameraConnector.cameraInput = ctx.ReadValue<Vector2>();
+        playerControls.Game.CameraMovement.canceled -= ctx => cameraConnector.cameraInput = new Vector2();
+
+        playerControls.Game.CameraFastToggle.performed -= ctx => cameraConnector.fastCamera = !cameraConnector.fastCamera;
+
+        playerControls.Game.CamerRotation.performed -= ctx =>
+        {
+            float rotationValue = ctx.ReadValue<float>();
+            if (rotationValue >= 0.5f)
+            {
+                cameraConnector.cameraRotateRight = true;
+                cameraConnector.cameraRotateLeft = false;
+            }
+            else if (rotationValue <= -0.5f)
+            {
+                cameraConnector.cameraRotateLeft = true;
+                cameraConnector.cameraRotateRight = false;
+            }
+        };
+        playerControls.Game.CamerRotation.canceled -= ctx =>
+        {
+            cameraConnector.cameraRotateLeft = false;
+            cameraConnector.cameraRotateRight = false;
+        };
+
+        playerControls.Game.CameraZoom.performed -= ctx =>
+        {
+            float zoomValue = ctx.ReadValue<float>();
+            if (zoomValue > 1)
+            {
+                cameraConnector.cameraZoomIn = true;
+                cameraConnector.cameraZoomOut = false;
+            }
+
+            else if (zoomValue < -1)
+            {
+                cameraConnector.cameraZoomIn = false;
+                cameraConnector.cameraZoomOut = true;
+            }
+        };
+        playerControls.Game.CameraZoom.canceled -= ctx =>
+        {
+            cameraConnector.cameraZoomIn = false;
+            cameraConnector.cameraZoomOut = false;
+        };
+
+        playerControls.Game.CameraLock.performed -= ctx => cameraConnector.lockCamera = !cameraConnector.lockCamera;
+
+        //Player Controls
+        playerControls.Game.PlayerMove.performed -= ctx => player.PlayerMove();
     }
 }

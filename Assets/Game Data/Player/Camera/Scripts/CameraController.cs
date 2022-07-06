@@ -4,35 +4,15 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] CameraConnector cameraConnector;
     public Transform cameraTranform;
     public Transform playerTransform;
 
-    public float normalSpeed;
-    public float fastSpeed;
-    public float movementSpeed;
-    public float movementTime;
-    public float rotationAmount;
-    public Vector3 zoomAmount;
-
-    public Vector3 newPosition;
-    public Quaternion newRotation;
-    public Vector3 newZoom;
-
-    public Vector2 cameraInput
-    {
-        private get;
-        set;
-    }
-    public bool fastCamera;
-    public float cameraRotation;
-    public float cameraZoom;
-    public bool lockCamera;
-
     private void Start()
     {
-        newPosition = transform.position;
-        newRotation = transform.rotation;
-        newZoom = cameraTranform.localPosition;
+        cameraConnector.newPosition = transform.position;
+        cameraConnector.newRotation = transform.rotation;
+        cameraConnector.newZoom = cameraTranform.localPosition;
     }
 
     private void Update()
@@ -42,72 +22,81 @@ public class CameraController : MonoBehaviour
         HandleZoom();
     }
 
+    /// <summary>
+    /// Function that handles the movement of the camera via the WASD keys
+    /// </summary>
     void HandleMovementInput()
     {
-        if(lockCamera)
+        if(cameraConnector.lockCamera)
         {
-            newPosition = playerTransform.position;
+            cameraConnector.newPosition = playerTransform.position;
         }
 
         //Use fast speed if the shift key is down
-        if (fastCamera)
-            movementSpeed = fastSpeed;
+        if (cameraConnector.fastCamera)
+            cameraConnector.movementSpeed = cameraConnector.fastSpeed;
         else
-            movementSpeed = normalSpeed;
+            cameraConnector.movementSpeed = cameraConnector.normalSpeed;
 
         //Right
-        if(cameraInput.x >= 0.5f)
+        if(cameraConnector.cameraInput.x >= 0.5f)
         {
-            newPosition += (transform.right * movementSpeed);
+            cameraConnector.newPosition += (transform.right * cameraConnector.movementSpeed);
         }
 
         //Left
-        else if (cameraInput.x <= -0.5f)
+        else if (cameraConnector.cameraInput.x <= -0.5f)
         {
-            newPosition += (transform.right * -movementSpeed);
+            cameraConnector.newPosition += (transform.right * -cameraConnector.movementSpeed);
         }
 
         //Forward
-        if (cameraInput.y >= 0.5f)
+        if (cameraConnector.cameraInput.y >= 0.5f)
         {
-            newPosition += (transform.forward * movementSpeed);
+            cameraConnector.newPosition += (transform.forward * cameraConnector.movementSpeed);
         }
 
         //Backward
-        else if (cameraInput.y <= -0.5f)
+        else if (cameraConnector.cameraInput.y <= -0.5f)
         {
-            newPosition += (transform.forward * -movementSpeed);
+            cameraConnector.newPosition += (transform.forward * -cameraConnector.movementSpeed);
         }
 
-        transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
+        transform.position = Vector3.Lerp(transform.position, cameraConnector.newPosition, Time.deltaTime * cameraConnector.movementTime);
     }
 
+    /// <summary>
+    /// Function that handles the rotation of the camera via the QE keys
+    /// </summary>
     void HandleRotation()
     {
         //Rotate Clockwise
-        if (cameraRotation >= 0.5f)
+        if (cameraConnector.cameraRotateRight)
         {
-            newRotation *= Quaternion.Euler(Vector3.up * rotationAmount);
+            cameraConnector.newRotation *= Quaternion.Euler(Vector3.up * cameraConnector.rotationAmount);
         }
         //Rotate anti-Clockwise
-        else if (cameraRotation <= -0.5f)
+        else if (cameraConnector.cameraRotateLeft)
         {
-            newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
+            cameraConnector.newRotation *= Quaternion.Euler(Vector3.up * -cameraConnector.rotationAmount);
         }
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * movementTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, cameraConnector.newRotation, Time.deltaTime * cameraConnector.movementTime);
     }
 
+    /// <summary>
+    /// Function that handles the zooming of the camera via the mouse scroll wheel
+    /// </summary>
     void HandleZoom()
     {
-        if (cameraZoom >= 1f)
+        if (cameraConnector.cameraZoomIn)
         {
-            newZoom -= zoomAmount;
+            cameraConnector.newZoom -= cameraConnector.zoomAmount;
         }
-        else if (cameraZoom <= -1f)
+        else if (cameraConnector.cameraZoomOut)
         {
-            newZoom += zoomAmount;
+            cameraConnector.newZoom += cameraConnector.zoomAmount;
         }
-        cameraTranform.localPosition = Vector3.Lerp(cameraTranform.localPosition, newZoom, Time.deltaTime * movementTime);
+        cameraTranform.localPosition = Vector3.Lerp(cameraTranform.localPosition, cameraConnector.newZoom, Time.deltaTime * cameraConnector.movementTime);
     }
     
 }

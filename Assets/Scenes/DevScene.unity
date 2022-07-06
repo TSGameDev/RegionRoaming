@@ -366,12 +366,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1159004671}
   - component: {fileID: 1159004672}
-  - component: {fileID: 1159004673}
   - component: {fileID: 1159004674}
+  - component: {fileID: 1159004677}
+  - component: {fileID: 1159004676}
+  - component: {fileID: 1159004673}
   - component: {fileID: 1159004675}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -384,7 +386,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159004670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.845963, y: 1.453, z: 6.824}
+  m_LocalPosition: {x: 18.845963, y: 2.667, z: 6.824}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -424,7 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931396d505c89bf4f86f2d1e324f7e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraController: {fileID: 1804318092}
+  cameraConnector: {fileID: 11400000, guid: ef7bf6f3f8bbb8d448d655801d74acec, type: 2}
+  playerConnector: {fileID: 11400000, guid: 501361368eea1fd48b39a926fc22441d, type: 2}
 --- !u!195 &1159004674
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -436,15 +439,15 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.2
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 140
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 300
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1.7
-  m_BaseOffset: 0
+  m_BaseOffset: 1.2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1159004675
@@ -459,6 +462,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a008dcd286466d43a767288b548c5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerConnector: {fileID: 11400000, guid: 501361368eea1fd48b39a926fc22441d, type: 2}
+--- !u!54 &1159004676
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159004670}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &1159004677
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159004670}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.7
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.39, z: 0}
 --- !u!1001 &1364404406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -484,7 +518,7 @@ PrefabInstance:
     - target: {fileID: 1244539903904952439, guid: c2af11c01d1176e4d98619176b00d199,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.219
       objectReference: {fileID: 0}
     - target: {fileID: 1244539903904952439, guid: c2af11c01d1176e4d98619176b00d199,
         type: 3}
@@ -831,18 +865,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52115c03ef260de47bc3da70caf93f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraConnector: {fileID: 11400000, guid: ef7bf6f3f8bbb8d448d655801d74acec, type: 2}
   cameraTranform: {fileID: 197605985}
   playerTransform: {fileID: 1159004671}
-  normalSpeed: 0.2
-  fastSpeed: 0.5
-  movementSpeed: 1
-  movementTime: 5
-  rotationAmount: 1
-  zoomAmount: {x: 0, y: 5, z: -5}
-  newPosition: {x: 0, y: 0, z: 0}
-  newRotation: {x: 0, y: 0, z: 0, w: 0}
-  newZoom: {x: 0, y: 0, z: 0}
-  fastCamera: 0
-  cameraRotation: 0
-  cameraZoom: 0
-  lockCamera: 0
