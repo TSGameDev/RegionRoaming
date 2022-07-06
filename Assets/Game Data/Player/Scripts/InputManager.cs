@@ -6,11 +6,13 @@ public class InputManager : MonoBehaviour
 {
     private PlayerControls playerControls;
     [SerializeField] private CameraController cameraController;
+    Player player;
 
     private void OnEnable()
     {
         playerControls = new PlayerControls();
         cameraController = FindObjectOfType<CameraController>();
+        player = GetComponent<Player>();
 
         playerControls.Enable();
 
@@ -23,6 +25,9 @@ public class InputManager : MonoBehaviour
         playerControls.Game.CameraZoom.performed += ctx => cameraController.cameraZoom = ctx.ReadValue<float>();
         playerControls.Game.CameraZoom.canceled += ctx => cameraController.cameraZoom = 0f;
         playerControls.Game.CameraLock.performed += ctx => cameraController.lockCamera = !cameraController.lockCamera;
+
+        //Player Controls
+        playerControls.Game.PlayerMove.performed += ctx => player.PlayerMove();
     }
 
     private void OnDisable()
