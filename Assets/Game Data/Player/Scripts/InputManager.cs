@@ -22,6 +22,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.CamerRotation.canceled += ctx => cameraController.cameraRotation = 0f;
         playerControls.Game.CameraZoom.performed += ctx => cameraController.cameraZoom = ctx.ReadValue<float>();
         playerControls.Game.CameraZoom.canceled += ctx => cameraController.cameraZoom = 0f;
+        playerControls.Game.CameraLock.performed += ctx => cameraController.lockCamera = !cameraController.lockCamera;
     }
 
     private void OnDisable()

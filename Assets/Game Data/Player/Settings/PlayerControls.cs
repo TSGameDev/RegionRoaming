@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraLock"",
+                    ""type"": ""Button"",
+                    ""id"": ""97bbc7c4-6e7b-4bb5-9a39-ee62b4cb6a46"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -229,6 +238,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""CameraZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0244ee9-29e8-4722-b651-fd7a1bdd4554"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -241,6 +261,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Game_CameraFastToggle = m_Game.FindAction("CameraFastToggle", throwIfNotFound: true);
         m_Game_CamerRotation = m_Game.FindAction("CamerRotation", throwIfNotFound: true);
         m_Game_CameraZoom = m_Game.FindAction("CameraZoom", throwIfNotFound: true);
+        m_Game_CameraLock = m_Game.FindAction("CameraLock", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -304,6 +325,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_CameraFastToggle;
     private readonly InputAction m_Game_CamerRotation;
     private readonly InputAction m_Game_CameraZoom;
+    private readonly InputAction m_Game_CameraLock;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
@@ -312,6 +334,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @CameraFastToggle => m_Wrapper.m_Game_CameraFastToggle;
         public InputAction @CamerRotation => m_Wrapper.m_Game_CamerRotation;
         public InputAction @CameraZoom => m_Wrapper.m_Game_CameraZoom;
+        public InputAction @CameraLock => m_Wrapper.m_Game_CameraLock;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -333,6 +356,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @CameraZoom.started -= m_Wrapper.m_GameActionsCallbackInterface.OnCameraZoom;
                 @CameraZoom.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnCameraZoom;
                 @CameraZoom.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnCameraZoom;
+                @CameraLock.started -= m_Wrapper.m_GameActionsCallbackInterface.OnCameraLock;
+                @CameraLock.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnCameraLock;
+                @CameraLock.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnCameraLock;
             }
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
@@ -349,6 +375,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @CameraZoom.started += instance.OnCameraZoom;
                 @CameraZoom.performed += instance.OnCameraZoom;
                 @CameraZoom.canceled += instance.OnCameraZoom;
+                @CameraLock.started += instance.OnCameraLock;
+                @CameraLock.performed += instance.OnCameraLock;
+                @CameraLock.canceled += instance.OnCameraLock;
             }
         }
     }
@@ -359,5 +388,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnCameraFastToggle(InputAction.CallbackContext context);
         void OnCamerRotation(InputAction.CallbackContext context);
         void OnCameraZoom(InputAction.CallbackContext context);
+        void OnCameraLock(InputAction.CallbackContext context);
     }
 }

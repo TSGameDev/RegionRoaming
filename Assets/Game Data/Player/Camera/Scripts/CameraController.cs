@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform cameraTranform;
+    public Transform playerTransform;
 
     public float normalSpeed;
     public float fastSpeed;
@@ -25,6 +26,7 @@ public class CameraController : MonoBehaviour
     public bool fastCamera;
     public float cameraRotation;
     public float cameraZoom;
+    public bool lockCamera;
 
     private void Start()
     {
@@ -42,6 +44,11 @@ public class CameraController : MonoBehaviour
 
     void HandleMovementInput()
     {
+        if(lockCamera)
+        {
+            newPosition = playerTransform.position;
+        }
+
         //Use fast speed if the shift key is down
         if (fastCamera)
             movementSpeed = fastSpeed;
@@ -102,4 +109,5 @@ public class CameraController : MonoBehaviour
         }
         cameraTranform.localPosition = Vector3.Lerp(cameraTranform.localPosition, newZoom, Time.deltaTime * movementTime);
     }
+    
 }
