@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
@@ -19,6 +22,13 @@ public class Player : MonoBehaviour
     Vector3 movePos;
     int terrainLayer = 1 << 6;
     float closeEnough = 0.2f;
+
+    #endregion
+
+    #region Player Inventory
+
+    public bool inventoryOpen;
+    public GameObject inventoryUI;
 
     #endregion
 
@@ -55,12 +65,11 @@ public class Player : MonoBehaviour
         {
             //Assigned terrain poition to the movePos variable
             movePos = hit.point;
+            agent.SetDestination(movePos);
         }
-        //Sets the players next walk/run position via the Navmesh agent component.
-        agent.SetDestination(movePos);
 
-        //If the distance between the issues movement order position is greater than the walk threshol, makes the player run to the location.
-        if (agent.remainingDistance > playerConnector.walkThreshold)
+        //If the distance between the issued movement order position is greater than the walk threshol, makes the player run to the location.
+        if (agent.remainingDistance >= playerConnector.walkThreshold)
         {
             agent.speed = playerConnector.runSpeed;
             animController.SetBool(playerConnector.animRunHash, true);
@@ -73,5 +82,56 @@ public class Player : MonoBehaviour
             animController.SetBool(playerConnector.animWalkHash, true);
             animController.SetBool(playerConnector.animRunHash, false);
         }
+    }
+
+    /// <summary>
+    /// Function to tween in or out the inventory
+    /// </summary>
+    public void ShowInventory()
+    {
+        inventoryOpen = !inventoryOpen;
+        if(inventoryOpen)
+        {
+            inventoryUI.GetComponent<Tween>().BeginTween();
+        }
+        else
+        {
+            inventoryUI.GetComponent<Tween>().ReturnTween();
+        }
+        
+    }
+
+    /// <summary>
+    /// Function to add an item to the players inventory
+    /// </summary>
+    /// <param name="ingredient">The ingredient to add to the players inventory</param>
+    /// <param name="amount"></param>
+    public void AddItemToInventory(IngredientScriptableObject ingredient, int amount)
+    {
+        if (playerConnector.playerInventory.Count == 30)
+        {
+            return;
+        }
+
+        Sprite itemInventoryImage = ingredient.ingredientImage;
+
+        if (playerConnector.playerInventory.ContainsKey(ingredient))
+        {
+            playerConnector.playerInventory[ingredient] += amount;
+            playerConnector.playerInventoryUI[ingredient].GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
+
+        }
+        else
+        {
+            playerConnector.playerInventory.Add(ingredient, amount);
+            GameObject itemUI = Instantiate(playerConnector.itemInventoryImage, inventoryUI.transform);
+            itemUI.GetComponentInChildren<Image>().sprite = itemInventoryImage;
+            itemUI.GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
+        }
+    }
+
+    public void RemoveItemFromInventory(IngredientScriptableObject ingredient, int amount)
+    {
+
     }
 }

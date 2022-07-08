@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using TMPro;
 
 public enum Skills
 {
@@ -122,6 +124,19 @@ public class PlayerConnector : SerializedScriptableObject
     [FoldoutGroup("base/Player/Movement Variables")]
     [PropertyTooltip("The distance from the movement order the player needs to be to make the player run.")]
     public float walkThreshold;
+
+    #endregion
+
+    #region Player Inventory
+
+    [FoldoutGroup("base/Player/Player Stats/Inventory")]
+    public GameObject itemInventoryImage;
+    [FoldoutGroup("base/Player/Player Stats/Inventory")]
+    public GameObject itemUIToolTip;
+    [FoldoutGroup("base/Player/Player Stats/Inventory")]
+    public Dictionary<IngredientScriptableObject, int> playerInventory = new Dictionary<IngredientScriptableObject, int>();
+    [HideInInspector]
+    public Dictionary<IngredientScriptableObject, GameObject> playerInventoryUI = new Dictionary<IngredientScriptableObject, GameObject>();
 
     #endregion
 

@@ -70,6 +70,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.PlayerMove.performed += ctx => player.PlayerMove();
 
         playerControls.Game.PlayerInteraction.performed += ctx => playerConnector.playerInteraction();
+        playerControls.Game.PlayerInventory.performed += ctx => player.ShowInventory();
     }
 
     private void OnDisable()

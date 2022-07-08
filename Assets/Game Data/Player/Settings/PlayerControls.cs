@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlayerInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""c26eb4c2-ce9e-499b-b1f1-0494565b2b6e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -289,6 +298,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""PlayerInteraction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a209ba3d-96d2-4451-a30d-661a7bd970f0"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -304,6 +324,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Game_CameraLock = m_Game.FindAction("CameraLock", throwIfNotFound: true);
         m_Game_PlayerMove = m_Game.FindAction("PlayerMove", throwIfNotFound: true);
         m_Game_PlayerInteraction = m_Game.FindAction("PlayerInteraction", throwIfNotFound: true);
+        m_Game_PlayerInventory = m_Game.FindAction("PlayerInventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -370,6 +391,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_CameraLock;
     private readonly InputAction m_Game_PlayerMove;
     private readonly InputAction m_Game_PlayerInteraction;
+    private readonly InputAction m_Game_PlayerInventory;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
@@ -381,6 +403,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @CameraLock => m_Wrapper.m_Game_CameraLock;
         public InputAction @PlayerMove => m_Wrapper.m_Game_PlayerMove;
         public InputAction @PlayerInteraction => m_Wrapper.m_Game_PlayerInteraction;
+        public InputAction @PlayerInventory => m_Wrapper.m_Game_PlayerInventory;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -411,6 +434,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @PlayerInteraction.started -= m_Wrapper.m_GameActionsCallbackInterface.OnPlayerInteraction;
                 @PlayerInteraction.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnPlayerInteraction;
                 @PlayerInteraction.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnPlayerInteraction;
+                @PlayerInventory.started -= m_Wrapper.m_GameActionsCallbackInterface.OnPlayerInventory;
+                @PlayerInventory.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnPlayerInventory;
+                @PlayerInventory.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnPlayerInventory;
             }
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
@@ -436,6 +462,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @PlayerInteraction.started += instance.OnPlayerInteraction;
                 @PlayerInteraction.performed += instance.OnPlayerInteraction;
                 @PlayerInteraction.canceled += instance.OnPlayerInteraction;
+                @PlayerInventory.started += instance.OnPlayerInventory;
+                @PlayerInventory.performed += instance.OnPlayerInventory;
+                @PlayerInventory.canceled += instance.OnPlayerInventory;
             }
         }
     }
@@ -449,5 +478,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnCameraLock(InputAction.CallbackContext context);
         void OnPlayerMove(InputAction.CallbackContext context);
         void OnPlayerInteraction(InputAction.CallbackContext context);
+        void OnPlayerInventory(InputAction.CallbackContext context);
     }
 }

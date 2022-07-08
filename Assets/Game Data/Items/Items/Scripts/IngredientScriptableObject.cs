@@ -42,7 +42,7 @@ public class IngredientScriptableObject : SerializedScriptableObject
     [VerticalGroup("General Information/Split/Left")]
     [PreviewField(75, ObjectFieldAlignment.Center)]
     [HideLabel]
-    public Image ingredientImage;
+    public Sprite ingredientImage;
     [VerticalGroup("General Information/Split/Right")]
     public int ID;
     [VerticalGroup("General Information/Split/Right")]
@@ -53,9 +53,16 @@ public class IngredientScriptableObject : SerializedScriptableObject
     public GameObject ingredientPrefab;
     [VerticalGroup("General Information/Split/Right")]
     public IngredientType ingredientType;
+    [VerticalGroup("General Information/Split/Right")]
+    public int minValue;
+    [VerticalGroup("General Information/Split/Right")]
+    public int maxValue;
 
     [BoxGroup("Alchemical Properties")]
     public List<AlchemicalTraits> alchemicalTratis;
+
+    [BoxGroup("Alchemical Properties")]
+    public List<IngredientScriptableObject> alchemyCraftingRecipe = new List<IngredientScriptableObject>();
 
     [FoldoutGroup("Alchemical Properties/Processes")]
     public bool canMortarPestle;

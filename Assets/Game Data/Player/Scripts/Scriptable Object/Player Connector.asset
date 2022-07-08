@@ -861,18 +861,58 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: playerInventory
+      Entry: 7
+      Data: 12|System.Collections.Generic.Dictionary`2[[IngredientScriptableObject,
+        Assembly-CSharp],[System.Int32, mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 13|System.Collections.Generic.ObjectEqualityComparer`1[[IngredientScriptableObject,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: playerInventoryUI
+      Entry: 7
+      Data: 14|System.Collections.Generic.Dictionary`2[[IngredientScriptableObject,
+        Assembly-CSharp],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 15|System.Collections.Generic.ObjectEqualityComparer`1[[IngredientScriptableObject,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: playerInteraction
       Entry: 7
-      Data: 12|PlayerConnector+Interaction, Assembly-CSharp
+      Data: 16|PlayerConnector+Interaction, Assembly-CSharp
     - Name: target
       Entry: 7
-      Data: 13|PlayerConnector+<>c, Assembly-CSharp
+      Data: 17|PlayerConnector+<>c, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
     - Name: declaringType
       Entry: 7
-      Data: 14|System.RuntimeType, mscorlib
+      Data: 18|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: PlayerConnector+<>c, Assembly-CSharp
@@ -881,10 +921,10 @@ MonoBehaviour:
       Data: 
     - Name: methodName
       Entry: 1
-      Data: <OnEnable>b__25_0
+      Data: <OnEnable>b__29_0
     - Name: delegateType
       Entry: 7
-      Data: 15|System.RuntimeType, mscorlib
+      Data: 19|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: PlayerConnector+Interaction, Assembly-CSharp
@@ -893,7 +933,7 @@ MonoBehaviour:
       Data: 
     - Name: signature
       Entry: 7
-      Data: 16|System.Type[], mscorlib
+      Data: 20|System.Type[], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -927,3 +967,7 @@ MonoBehaviour:
   walkSpeed: 3
   runSpeed: 5
   walkThreshold: 5
+  itemInventoryImage: {fileID: 2869800635897577239, guid: 4dbce91b7d4c729448266d558baa52e7,
+    type: 3}
+  itemUIToolTip: {fileID: 6977612578790991444, guid: c0c4c9afcd871e7469877256c1f109a3,
+    type: 3}

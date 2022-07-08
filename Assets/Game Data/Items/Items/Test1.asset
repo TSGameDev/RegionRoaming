@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Test
-  m_EditorClassIdentifier: Assembly-CSharp::IngredientScriptableObject
+  m_Script: {fileID: 11500000, guid: 71a06be2964767b42b4589c0a2856529, type: 3}
+  m_Name: Test1
+  m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -35,12 +35,15 @@ MonoBehaviour:
       Entry: 8
       Data: 
   ingredientImage: {fileID: 0}
-  ID: 0
-  ingredientName: 
-  ingredientTier: 0
+  ID: 1
+  ingredientName: Test1
+  ingredientTier: 4
   ingredientPrefab: {fileID: 0}
-  ingredientType: 0
-  alchemicalTratis: 
+  ingredientType: 1
+  minValue: 0
+  maxValue: 0
+  alchemicalTratis: 0100000002000000
+  alchemyCraftingRecipe: []
   canMortarPestle: 0
   mortarPestleResult: {fileID: 0}
   mortarPestleResult2: {fileID: 0}
