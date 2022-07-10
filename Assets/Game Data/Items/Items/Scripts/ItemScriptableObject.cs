@@ -22,7 +22,7 @@ public enum AlchemicalTraits
 
 public struct BunsenBurnerProcess
 {
-    public BunsenBurnerProcess(int minTemp, int maxTemp, IngredientScriptableObject result)
+    public BunsenBurnerProcess(int minTemp, int maxTemp, ItemScriptableObject result)
     {
         this.minTemp = minTemp;
         this.maxTemp = maxTemp;
@@ -31,11 +31,11 @@ public struct BunsenBurnerProcess
 
     public int minTemp;
     public int maxTemp;
-    public IngredientScriptableObject result;
+    public ItemScriptableObject result;
 }
 
 [CreateAssetMenu(fileName = "New Ingredient", menuName = "Scriptable Object/New Ingredient", order = 2)]
-public class IngredientScriptableObject : SerializedScriptableObject
+public class ItemScriptableObject : SerializedScriptableObject
 {
     [BoxGroup("General Information")]
     [HorizontalGroup("General Information/Split", Width = 80)]
@@ -62,7 +62,7 @@ public class IngredientScriptableObject : SerializedScriptableObject
     public List<AlchemicalTraits> alchemicalTratis;
 
     [BoxGroup("Alchemical Properties")]
-    public List<IngredientScriptableObject> alchemyCraftingRecipe = new List<IngredientScriptableObject>();
+    public List<ItemScriptableObject> alchemyCraftingRecipe = new List<ItemScriptableObject>();
 
     [FoldoutGroup("Alchemical Properties/Processes")]
     public bool canMortarPestle;
@@ -70,12 +70,12 @@ public class IngredientScriptableObject : SerializedScriptableObject
     [HideIf("@!canMortarPestle")]
     [PreviewField(Alignment = ObjectFieldAlignment.Center)]
     [HideLabel]
-    public IngredientScriptableObject mortarPestleResult;
+    public ItemScriptableObject mortarPestleResult;
     [HorizontalGroup("Alchemical Properties/Processes/MortarPestle")]
     [HideIf("@!canMortarPestle")]
     [PreviewField(Alignment = ObjectFieldAlignment.Center)]
     [HideLabel]
-    public IngredientScriptableObject mortarPestleResult2;
+    public ItemScriptableObject mortarPestleResult2;
 
     [FoldoutGroup("Alchemical Properties/Processes")]
     public bool canJuicer;
@@ -83,12 +83,12 @@ public class IngredientScriptableObject : SerializedScriptableObject
     [HideIf("@!canJuicer")]
     [PreviewField(Alignment = ObjectFieldAlignment.Center)]
     [HideLabel]
-    public IngredientScriptableObject juicerResult;
+    public ItemScriptableObject juicerResult;
     [HorizontalGroup("Alchemical Properties/Processes/Juicer")]
     [HideIf("@!canJuicer")]
     [PreviewField(Alignment = ObjectFieldAlignment.Center)]
     [HideLabel]
-    public IngredientScriptableObject juicerResult2;
+    public ItemScriptableObject juicerResult2;
 
     [FoldoutGroup("Alchemical Properties/Processes")]
     public bool canChopping;
@@ -96,18 +96,18 @@ public class IngredientScriptableObject : SerializedScriptableObject
     [HideIf("@!canChopping")]
     [PreviewField(Alignment = ObjectFieldAlignment.Center)]
     [HideLabel]
-    public IngredientScriptableObject choppingResult;
+    public ItemScriptableObject choppingResult;
     [HorizontalGroup("Alchemical Properties/Processes/Chopping")]
     [HideIf("@!canChopping")]
     [PreviewField(Alignment = ObjectFieldAlignment.Center)]
     [HideLabel]
-    public IngredientScriptableObject choppingResult2;
+    public ItemScriptableObject choppingResult2;
 
     [FoldoutGroup("Alchemical Properties/Processes")]
     public bool canImbue;
     [FoldoutGroup("Alchemical Properties/Processes")]
     [HideIf("@!canImbue")]
-    public List<IngredientScriptableObject> ImbueRecipe = new List<IngredientScriptableObject>();
+    public List<ItemScriptableObject> ImbueRecipe = new List<ItemScriptableObject>();
 
     [FoldoutGroup("Alchemical Properties/Processes")]
     public bool canBunsenBurner;

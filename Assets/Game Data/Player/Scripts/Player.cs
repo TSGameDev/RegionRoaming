@@ -32,6 +32,12 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    #region Player Interaction
+
+    public TextMeshProUGUI interactionText;
+
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,7 +112,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="ingredient">The ingredient to add to the players inventory</param>
     /// <param name="amount"></param>
-    public void AddItemToInventory(IngredientScriptableObject ingredient, int amount)
+    public void AddItemToInventory(ItemScriptableObject ingredient, int amount)
     {
         if (playerConnector.playerInventory.Count == 30)
         {
@@ -118,7 +124,11 @@ public class Player : MonoBehaviour
         if (playerConnector.playerInventory.ContainsKey(ingredient))
         {
             playerConnector.playerInventory[ingredient] += amount;
-            playerConnector.playerInventoryUI[ingredient].GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
+            GameObject itemUI = playerConnector.playerInventoryUI[ingredient];
+            string itemAmount = playerConnector.playerInventory[ingredient].ToString();
+            TextMeshProUGUI itemUITxt = itemUI.GetComponentInChildren<TextMeshProUGUI>();
+            itemUITxt.text = itemAmount;
+            Debug.Log($"ItemUI: {itemUI}, ItemAmount: {itemAmount}, ItemUIText: {itemUITxt}");
 
         }
         else
@@ -127,10 +137,16 @@ public class Player : MonoBehaviour
             GameObject itemUI = Instantiate(playerConnector.itemInventoryImage, inventoryUI.transform);
             itemUI.GetComponentInChildren<Image>().sprite = itemInventoryImage;
             itemUI.GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
+            playerConnector.playerInventoryUI.Add(ingredient, itemUI);
         }
     }
 
-    public void RemoveItemFromInventory(IngredientScriptableObject ingredient, int amount)
+    /// <summary>
+    /// Function that removes an item from the player inventory.
+    /// </summary>
+    /// <param name="ingredient">the ingredient to remove.</param>
+    /// <param name="amount">the amount of that ingredient to remove.</param>
+    public void RemoveItemFromInventory(ItemScriptableObject ingredient, int amount)
     {
 
     }

@@ -15,7 +15,10 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -863,11 +866,11 @@ MonoBehaviour:
       Data: 
     - Name: playerInventory
       Entry: 7
-      Data: 12|System.Collections.Generic.Dictionary`2[[IngredientScriptableObject,
-        Assembly-CSharp],[System.Int32, mscorlib]], mscorlib
+      Data: 12|System.Collections.Generic.Dictionary`2[[ItemScriptableObject, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 13|System.Collections.Generic.ObjectEqualityComparer`1[[IngredientScriptableObject,
+      Data: 13|System.Collections.Generic.ObjectEqualityComparer`1[[ItemScriptableObject,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 8
@@ -883,15 +886,11 @@ MonoBehaviour:
       Data: 
     - Name: playerInventoryUI
       Entry: 7
-      Data: 14|System.Collections.Generic.Dictionary`2[[IngredientScriptableObject,
-        Assembly-CSharp],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib
+      Data: 14|System.Collections.Generic.Dictionary`2[[ItemScriptableObject, Assembly-CSharp],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
     - Name: comparer
-      Entry: 7
-      Data: 15|System.Collections.Generic.ObjectEqualityComparer`1[[IngredientScriptableObject,
-        Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 9
+      Data: 13
     - Name: 
       Entry: 12
       Data: 0
@@ -903,28 +902,37 @@ MonoBehaviour:
       Data: 
     - Name: playerInteraction
       Entry: 7
-      Data: 16|PlayerConnector+Interaction, Assembly-CSharp
+      Data: 15|PlayerConnector+Interaction, Assembly-CSharp
     - Name: target
       Entry: 7
-      Data: 17|PlayerConnector+<>c, Assembly-CSharp
+      Data: 16|Harvest+<>c__DisplayClass4_0, Assembly-CSharp
+    - Name: <>4__this
+      Entry: 10
+      Data: 0
+    - Name: other
+      Entry: 10
+      Data: 1
+    - Name: player
+      Entry: 10
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
     - Name: declaringType
       Entry: 7
-      Data: 18|System.RuntimeType, mscorlib
+      Data: 17|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: PlayerConnector+<>c, Assembly-CSharp
+      Data: Harvest+<>c__DisplayClass4_0, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
     - Name: methodName
       Entry: 1
-      Data: <OnEnable>b__29_0
+      Data: <OnTriggerEnter>b__0
     - Name: delegateType
       Entry: 7
-      Data: 19|System.RuntimeType, mscorlib
+      Data: 18|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: PlayerConnector+Interaction, Assembly-CSharp
@@ -933,7 +941,7 @@ MonoBehaviour:
       Data: 
     - Name: signature
       Entry: 7
-      Data: 20|System.Type[], mscorlib
+      Data: 19|System.Type[], mscorlib
     - Name: 
       Entry: 12
       Data: 0

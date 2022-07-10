@@ -34,7 +34,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  ingredientImage: {fileID: 0}
+  ingredientImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   ID: 1
   ingredientName: Test1
   ingredientTier: 4

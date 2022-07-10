@@ -134,9 +134,9 @@ public class PlayerConnector : SerializedScriptableObject
     [FoldoutGroup("base/Player/Player Stats/Inventory")]
     public GameObject itemUIToolTip;
     [FoldoutGroup("base/Player/Player Stats/Inventory")]
-    public Dictionary<IngredientScriptableObject, int> playerInventory = new Dictionary<IngredientScriptableObject, int>();
-    [HideInInspector]
-    public Dictionary<IngredientScriptableObject, GameObject> playerInventoryUI = new Dictionary<IngredientScriptableObject, GameObject>();
+    public Dictionary<ItemScriptableObject, int> playerInventory = new Dictionary<ItemScriptableObject, int>();
+    [FoldoutGroup("base/Player/Player Stats/Inventory")]
+    public Dictionary<ItemScriptableObject, GameObject> playerInventoryUI = new Dictionary<ItemScriptableObject, GameObject>();
 
     #endregion
 
