@@ -148,7 +148,7 @@ PrefabInstance:
     - target: {fileID: 6189211772932819077, guid: 74b39e4002a118b4a8e9726de6ce34cc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6189211772932819077, guid: 74b39e4002a118b4a8e9726de6ce34cc,
         type: 3}
@@ -281,6 +281,18 @@ MonoBehaviour:
   OnTweenReturn:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &96075064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96075059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2398d3b65050c2441bb5d00e5a62dfb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &197417428
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +596,7 @@ PrefabInstance:
     - target: {fileID: 3276233291996428906, guid: c0c4c9afcd871e7469877256c1f109a3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3276233291996428906, guid: c0c4c9afcd871e7469877256c1f109a3,
         type: 3}

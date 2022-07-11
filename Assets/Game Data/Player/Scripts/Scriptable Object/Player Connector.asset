@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: e63b57d3ed12266449e772700b07b9cc, type: 2}
+    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -884,7 +885,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 3
-      Data: 4
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -911,8 +912,8 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: $v
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -927,7 +928,7 @@ MonoBehaviour:
       Data: 15|PlayerConnector+Interaction, Assembly-CSharp
     - Name: target
       Entry: 7
-      Data: 16|PlayerConnector+<>c, Assembly-CSharp
+      Data: 16|Harvest+<>c, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -936,13 +937,13 @@ MonoBehaviour:
       Data: 17|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: PlayerConnector+<>c, Assembly-CSharp
+      Data: Harvest+<>c, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
     - Name: methodName
       Entry: 1
-      Data: <OnEnable>b__29_0
+      Data: <OnTriggerExit>b__5_0
     - Name: delegateType
       Entry: 7
       Data: 18|System.RuntimeType, mscorlib
@@ -988,7 +989,7 @@ MonoBehaviour:
   walkSpeed: 3
   runSpeed: 5
   walkThreshold: 5
-  itemInventoryImage: {fileID: 2869800635897577239, guid: 4dbce91b7d4c729448266d558baa52e7,
+  itemInventoryImage: {fileID: 2688058814862438163, guid: 4dbce91b7d4c729448266d558baa52e7,
     type: 3}
   itemUIToolTip: {fileID: 6977612578790991444, guid: c0c4c9afcd871e7469877256c1f109a3,
     type: 3}

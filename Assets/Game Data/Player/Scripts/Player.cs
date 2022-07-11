@@ -121,18 +121,7 @@ public class Player : MonoBehaviour
             GameObject itemUI = Instantiate(playerConnector.itemInventoryImage, inventoryUI.transform);
             itemUI.GetComponentInChildren<Image>().sprite = itemInventoryImage;
             itemUI.GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
-            
-            EventTrigger trigger = itemUI.GetComponent<EventTrigger>();
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerEnter;
-            entry.callback.AddListener((eventData) => { uiManagerConnector.onItemHover.Invoke(ingredient); });
-            trigger.triggers.Add(entry);
-
-            entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerExit;
-            entry.callback.AddListener((eventData) => { uiManagerConnector.onItemHoverExit.Invoke(); });
-            trigger.triggers.Add(entry);
-
+            itemUI.GetComponent<Interactions>().item = ingredient;
             playerConnector.playerInventoryUI.Add(ingredient, itemUI);
         }
         return true;
