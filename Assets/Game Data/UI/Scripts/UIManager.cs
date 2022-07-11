@@ -6,12 +6,14 @@ public class UIManager : MonoBehaviour
 {
     #region Player Inventory
 
-    public GameObject inventoryUI;
-    public GameObject toolTipUI;
-    public Image itemImage;
-    public TextMeshProUGUI itemName;
-    public TextMeshProUGUI itemTier;
-    public TextMeshProUGUI itemDescription;
+    [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private GameObject toolTipUI;
+    [SerializeField] private Image itemImage;
+    [SerializeField] private TextMeshProUGUI itemName;
+    [SerializeField] private TextMeshProUGUI itemTier;
+    [SerializeField] private TextMeshProUGUI itemDescription;
+    [SerializeField] private TextMeshProUGUI itemMinPrice;
+    [SerializeField] private TextMeshProUGUI itemMaxPrice;
 
     private bool inventoryOpen;
 
@@ -52,6 +54,8 @@ public class UIManager : MonoBehaviour
         itemName.text = item.name;
         itemTier.text = item.ingredientTier.ToString();
         itemDescription.text = item.itemDescription;
+        itemMinPrice.text = $"Min Price: {item.minValue}";
+        itemMaxPrice.text = $"Max Price: {item.maxValue}";
         toolTipUI.SetActive(true);
 
     }
@@ -66,5 +70,7 @@ public class UIManager : MonoBehaviour
         itemName.text = null;
         itemTier.text = null;
         itemDescription.text = null;
+        itemMinPrice.text = null;
+        itemMaxPrice.text = null;
     }
 }
