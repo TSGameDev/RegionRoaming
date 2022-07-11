@@ -9,11 +9,13 @@ public class InputManager : MonoBehaviour
 
     private PlayerControls playerControls;
     private Player player;
+    private UIManager uiManager;
 
     private void OnEnable()
     {
         playerControls = new PlayerControls();
         player = GetComponent<Player>();
+        uiManager = FindObjectOfType<UIManager>();
 
         playerControls.Enable();
 
@@ -70,7 +72,7 @@ public class InputManager : MonoBehaviour
         playerControls.Game.PlayerMove.performed += ctx => player.PlayerMove();
 
         playerControls.Game.PlayerInteraction.performed += ctx => playerConnector.playerInteraction();
-        playerControls.Game.PlayerInventory.performed += ctx => player.ShowInventory();
+        playerControls.Game.PlayerInventory.performed += ctx => uiManager.ShowInventory();
     }
 
     private void OnDisable()

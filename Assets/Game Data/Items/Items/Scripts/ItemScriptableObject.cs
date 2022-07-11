@@ -58,6 +58,10 @@ public class ItemScriptableObject : SerializedScriptableObject
     [VerticalGroup("General Information/Split/Right")]
     public int maxValue;
 
+    [BoxGroup("General Information")]
+    [Multiline]
+    public string itemDescription;
+
     [BoxGroup("Alchemical Properties")]
     public List<AlchemicalTraits> alchemicalTratis;
 

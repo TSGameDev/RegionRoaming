@@ -16,9 +16,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 11400000, guid: e63b57d3ed12266449e772700b07b9cc, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -877,7 +875,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
       Data: 0
+    - Name: $v
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -893,7 +903,19 @@ MonoBehaviour:
       Data: 13
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 10
       Data: 0
+    - Name: $v
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -905,16 +927,7 @@ MonoBehaviour:
       Data: 15|PlayerConnector+Interaction, Assembly-CSharp
     - Name: target
       Entry: 7
-      Data: 16|Harvest+<>c__DisplayClass4_0, Assembly-CSharp
-    - Name: <>4__this
-      Entry: 10
-      Data: 0
-    - Name: other
-      Entry: 10
-      Data: 1
-    - Name: player
-      Entry: 10
-      Data: 2
+      Data: 16|PlayerConnector+<>c, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -923,13 +936,13 @@ MonoBehaviour:
       Data: 17|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Harvest+<>c__DisplayClass4_0, Assembly-CSharp
+      Data: PlayerConnector+<>c, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
     - Name: methodName
       Entry: 1
-      Data: <OnTriggerEnter>b__0
+      Data: <OnEnable>b__29_0
     - Name: delegateType
       Entry: 7
       Data: 18|System.RuntimeType, mscorlib

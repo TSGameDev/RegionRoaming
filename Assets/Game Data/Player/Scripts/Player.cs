@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
     #region Dependices
     [SerializeField] PlayerConnector playerConnector;
+    [SerializeField] UIManagerConnector uiManagerConnector;
 
     NavMeshAgent agent;
     Animator animController;
@@ -27,7 +29,6 @@ public class Player : MonoBehaviour
 
     #region Player Inventory
 
-    public bool inventoryOpen;
     public GameObject inventoryUI;
 
     #endregion
@@ -91,32 +92,16 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Function to tween in or out the inventory
+    /// Function to add items to the players inventory. Returns a bool for if the addition was successful.
     /// </summary>
-    public void ShowInventory()
-    {
-        inventoryOpen = !inventoryOpen;
-        if(inventoryOpen)
-        {
-            inventoryUI.GetComponent<Tween>().BeginTween();
-        }
-        else
-        {
-            inventoryUI.GetComponent<Tween>().ReturnTween();
-        }
-        
-    }
-
-    /// <summary>
-    /// Function to add an item to the players inventory
-    /// </summary>
-    /// <param name="ingredient">The ingredient to add to the players inventory</param>
-    /// <param name="amount"></param>
-    public void AddItemToInventory(ItemScriptableObject ingredient, int amount)
+    /// <param name="ingredient">The item to add to the players inventory.</param>
+    /// <param name="amount">The amoutn of the item to add to the players inventory.</param>
+    /// <returns>A bool, True if the item was added to the players inventory. False if the item was not added to the players inventory.</returns>
+    public bool AddItemToInventory(ItemScriptableObject ingredient, int amount)
     {
         if (playerConnector.playerInventory.Count == 30)
         {
-            return;
+            return false;
         }
 
         Sprite itemInventoryImage = ingredient.ingredientImage;
@@ -128,7 +113,6 @@ public class Player : MonoBehaviour
             string itemAmount = playerConnector.playerInventory[ingredient].ToString();
             TextMeshProUGUI itemUITxt = itemUI.GetComponentInChildren<TextMeshProUGUI>();
             itemUITxt.text = itemAmount;
-            Debug.Log($"ItemUI: {itemUI}, ItemAmount: {itemAmount}, ItemUIText: {itemUITxt}");
 
         }
         else
@@ -137,8 +121,21 @@ public class Player : MonoBehaviour
             GameObject itemUI = Instantiate(playerConnector.itemInventoryImage, inventoryUI.transform);
             itemUI.GetComponentInChildren<Image>().sprite = itemInventoryImage;
             itemUI.GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
+            
+            EventTrigger trigger = itemUI.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) => { uiManagerConnector.onItemHover.Invoke(ingredient); });
+            trigger.triggers.Add(entry);
+
+            entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerExit;
+            entry.callback.AddListener((eventData) => { uiManagerConnector.onItemHoverExit.Invoke(); });
+            trigger.triggers.Add(entry);
+
             playerConnector.playerInventoryUI.Add(ingredient, itemUI);
         }
+        return true;
     }
 
     /// <summary>
@@ -146,8 +143,22 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="ingredient">the ingredient to remove.</param>
     /// <param name="amount">the amount of that ingredient to remove.</param>
-    public void RemoveItemFromInventory(ItemScriptableObject ingredient, int amount)
+    /// <returns>A bool, True if the item is removed from the inventory. False if the item was not removed from the inventory</returns>
+    public bool RemoveItemFromInventory(ItemScriptableObject ingredient, int amount)
     {
-
+        if(playerConnector.playerInventory[ingredient] == 1)
+        {
+            playerConnector.playerInventory.Remove(ingredient);
+            GameObject ItemUI = playerConnector.playerInventoryUI[ingredient];
+            Destroy(ItemUI);
+            playerConnector.playerInventoryUI.Remove(ingredient);
+            return true;
+        }
+        else
+        {
+            playerConnector.playerInventory[ingredient] -= amount;
+            playerConnector.playerInventoryUI[ingredient].GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
+            return true;
+        }
     }
 }

@@ -42,6 +42,7 @@ MonoBehaviour:
   ingredientType: 1
   minValue: 0
   maxValue: 0
+  itemDescription: A test item for the purpose of developing the multiple systems.
   alchemicalTratis: 0100000002000000
   alchemyCraftingRecipe: []
   canMortarPestle: 0
