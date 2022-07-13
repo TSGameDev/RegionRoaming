@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
         //Dependience collection
         agent = GetComponent<NavMeshAgent>();
         animController = GetComponent<Animator>();
+
+        playerConnector.addItemToInventory.AddListener(AddItemToInventory);
+        playerConnector.removeItemFromInventory.AddListener(RemoveItemFromInventory);
     }
 
     // Update is called once per frame
@@ -97,11 +100,11 @@ public class Player : MonoBehaviour
     /// <param name="ingredient">The item to add to the players inventory.</param>
     /// <param name="amount">The amoutn of the item to add to the players inventory.</param>
     /// <returns>A bool, True if the item was added to the players inventory. False if the item was not added to the players inventory.</returns>
-    public bool AddItemToInventory(ItemScriptableObject ingredient, int amount)
+    public void AddItemToInventory(ItemScriptableObject ingredient, int amount)
     {
         if (playerConnector.playerInventory.Count == 30)
         {
-            return false;
+            return;
         }
 
         Sprite itemInventoryImage = ingredient.ingredientImage;
@@ -124,7 +127,6 @@ public class Player : MonoBehaviour
             itemUI.GetComponent<Interactions>().item = ingredient;
             playerConnector.playerInventoryUI.Add(ingredient, itemUI);
         }
-        return true;
     }
 
     /// <summary>
@@ -133,7 +135,7 @@ public class Player : MonoBehaviour
     /// <param name="ingredient">the ingredient to remove.</param>
     /// <param name="amount">the amount of that ingredient to remove.</param>
     /// <returns>A bool, True if the item is removed from the inventory. False if the item was not removed from the inventory</returns>
-    public bool RemoveItemFromInventory(ItemScriptableObject ingredient, int amount)
+    public void RemoveItemFromInventory(ItemScriptableObject ingredient, int amount)
     {
         if(playerConnector.playerInventory[ingredient] == 1)
         {
@@ -141,13 +143,11 @@ public class Player : MonoBehaviour
             GameObject ItemUI = playerConnector.playerInventoryUI[ingredient];
             Destroy(ItemUI);
             playerConnector.playerInventoryUI.Remove(ingredient);
-            return true;
         }
         else
         {
             playerConnector.playerInventory[ingredient] -= amount;
             playerConnector.playerInventoryUI[ingredient].GetComponentInChildren<TextMeshProUGUI>().text = playerConnector.playerInventory[ingredient].ToString();
-            return true;
         }
     }
 }

@@ -15,9 +15,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: e63b57d3ed12266449e772700b07b9cc, type: 2}
-    - {fileID: 0}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -876,19 +874,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
       Data: 0
-    - Name: $v
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -904,19 +890,7 @@ MonoBehaviour:
       Data: 13
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
       Data: 0
-    - Name: $v
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -993,3 +967,9 @@ MonoBehaviour:
     type: 3}
   itemUIToolTip: {fileID: 6977612578790991444, guid: c0c4c9afcd871e7469877256c1f109a3,
     type: 3}
+  addItemToInventory:
+    m_PersistentCalls:
+      m_Calls: []
+  removeItemFromInventory:
+    m_PersistentCalls:
+      m_Calls: []

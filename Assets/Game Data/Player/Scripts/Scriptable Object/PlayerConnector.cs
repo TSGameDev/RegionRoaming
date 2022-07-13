@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using TMPro;
 
@@ -138,6 +139,9 @@ public class PlayerConnector : SerializedScriptableObject
     [FoldoutGroup("base/Player/Player Stats/Inventory")]
     public Dictionary<ItemScriptableObject, GameObject> playerInventoryUI = new Dictionary<ItemScriptableObject, GameObject>();
 
+    public UnityEvent <ItemScriptableObject, int> addItemToInventory;
+    public UnityEvent<ItemScriptableObject, int> removeItemFromInventory;
+
     #endregion
 
     #region Player Delegate
@@ -161,6 +165,8 @@ public class PlayerConnector : SerializedScriptableObject
     private void OnEnable()
     {
         playerInteraction = new Interaction(() => Debug.Log("Interaction Called."));
+        addItemToInventory = new UnityEvent<ItemScriptableObject, int>();
+        removeItemFromInventory = new UnityEvent<ItemScriptableObject, int>();
     }
 
     /// <summary>

@@ -8,6 +8,7 @@ public enum IngredientType
 {
     Base,
     Solute,
+    Potion,
     Junk
 }
 
@@ -34,7 +35,7 @@ public struct BunsenBurnerProcess
     public ItemScriptableObject result;
 }
 
-[CreateAssetMenu(fileName = "New Ingredient", menuName = "Scriptable Object/New Ingredient", order = 2)]
+[CreateAssetMenu(fileName = "New Ingredient", menuName = "Scriptable Object/New Ingredient", order = 4)]
 public class ItemScriptableObject : SerializedScriptableObject
 {
     [BoxGroup("General Information")]
