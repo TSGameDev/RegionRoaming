@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a06be2964767b42b4589c0a2856529, type: 3}
+  m_Name: Crimson Lims-Petal Flower
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: bunsenProcesses
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[BunsenBurnerProcess, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  ingredientImage: {fileID: 0}
+  ID: 0
+  ingredientName: Crimson Lims-Petal Flower
+  ingredientTier: 1
+  ingredientPrefab: {fileID: 0}
+  ingredientType: 1
+  minValue: 1
+  maxValue: 2
+  itemDescription: A slightly oily beautiful crimson flower of the Crimson Lims-Petal.
+    It still numbs the contact area
+  alchemicalTratis: 01000000
+  alchemyCraftingRecipe: []
+  canMortarPestle: 0
+  mortarPestleResult: {fileID: 0}
+  mortarPestleResult2: {fileID: 0}
+  canJuicer: 0
+  juicerResult: {fileID: 0}
+  juicerResult2: {fileID: 0}
+  canChopping: 0
+  choppingResult: {fileID: 0}
+  choppingResult2: {fileID: 0}
+  canImbue: 0
+  ImbueRecipe: []
+  canBunsenBurner: 0

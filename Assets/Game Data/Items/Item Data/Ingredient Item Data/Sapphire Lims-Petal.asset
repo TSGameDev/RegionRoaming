@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a06be2964767b42b4589c0a2856529, type: 3}
+  m_Name: Sapphire Lims-Petal
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: bunsenProcesses
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[BunsenBurnerProcess, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  ingredientImage: {fileID: 0}
+  ID: 0
+  ingredientName: Sapphire Lims-Petal
+  ingredientTier: 1
+  ingredientPrefab: {fileID: 5333718348133022844, guid: 4ee27d0cc4cb8074fb56b3b756ccd346,
+    type: 3}
+  ingredientType: 1
+  minValue: 1
+  maxValue: 3
+  itemDescription: A thin leafy medium length steam that blossoms into a bright sapphire
+    flower. The pistil of the flower is made of little buds that contain a soft and
+    fruity pip that will squish but bounce back to its normal form. These pips are
+    commonly consumed as they relive pain and sorness of everyday work.
+  alchemicalTratis: 01000000
+  alchemyCraftingRecipe: []
+  canMortarPestle: 1
+  mortarPestleResult: {fileID: 11400000, guid: 041874a3c168dae4da8cc50306124b2b, type: 2}
+  mortarPestleResult2: {fileID: 0}
+  canJuicer: 0
+  juicerResult: {fileID: 0}
+  juicerResult2: {fileID: 0}
+  canChopping: 0
+  choppingResult: {fileID: 0}
+  choppingResult2: {fileID: 0}
+  canImbue: 0
+  ImbueRecipe: []
+  canBunsenBurner: 0
