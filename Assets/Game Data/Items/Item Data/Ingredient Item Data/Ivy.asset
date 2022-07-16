@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71a06be2964767b42b4589c0a2856529, type: 3}
-  m_Name: Crimson Lims-Petal Stem
+  m_Name: Ivy
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: f46365f7d8050a540a0ed3fb35ccc46e, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -27,28 +28,46 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: BunsenBurnerProcess, Assembly-CSharp
+    - Name: minTemp
+      Entry: 3
+      Data: 100
+    - Name: maxTemp
+      Entry: 3
+      Data: 110
+    - Name: result
+      Entry: 10
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-  ingredientImage: {fileID: 0}
+  ingredientImage: {fileID: 21300000, guid: 5959a281deb144940b1881f7a7a4cc6e, type: 3}
   ID: 0
-  ingredientName: Crimson Lims-Petal Stem
+  ingredientName: Ivy
   ingredientTier: 1
-  ingredientPrefab: {fileID: 0}
+  ingredientPrefab: {fileID: 3980488468485941848, guid: 521248eb180bc4d40925b2f7f2611132,
+    type: 3}
   ingredientType: 1
   minValue: 1
-  maxValue: 2
-  itemDescription: A thin leafy stem from the Crimson Lims-Petal flower.
-  alchemicalTratis: 04000000
+  maxValue: 3
+  itemDescription: A thin strechy stem covered in a multitude of leafs. The stem
+    is textured and rough while the leafs are shiny due to a thin layer of slime
+    on them.
+  alchemicalTratis: 
   alchemyCraftingRecipe: []
-  canMortarPestle: 0
-  mortarPestleResult: {fileID: 0}
+  canMortarPestle: 1
+  mortarPestleResult: {fileID: 11400000, guid: 6d73924803f790b4f8af2a33aa5e549d, type: 2}
   mortarPestleResult2: {fileID: 0}
-  canJuicer: 0
+  canJuicer: 1
   juicerResult: {fileID: 0}
   juicerResult2: {fileID: 0}
   canChopping: 0
@@ -56,4 +75,4 @@ MonoBehaviour:
   choppingResult2: {fileID: 0}
   canImbue: 0
   ImbueRecipe: []
-  canBunsenBurner: 0
+  canBunsenBurner: 1

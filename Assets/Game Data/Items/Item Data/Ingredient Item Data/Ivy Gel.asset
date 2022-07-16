@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71a06be2964767b42b4589c0a2856529, type: 3}
-  m_Name: Sapphire Lims-Petal
+  m_Name: Ivy Gel
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -36,21 +36,17 @@ MonoBehaviour:
       Data: 
   ingredientImage: {fileID: 0}
   ID: 0
-  ingredientName: Sapphire Lims-Petal
+  ingredientName: Ivy Gel
   ingredientTier: 1
-  ingredientPrefab: {fileID: 5333718348133022844, guid: 4ee27d0cc4cb8074fb56b3b756ccd346,
-    type: 3}
+  ingredientPrefab: {fileID: 0}
   ingredientType: 1
   minValue: 1
-  maxValue: 3
-  itemDescription: A thin leafy medium length steam that blossoms into a bright sapphire
-    flower. The pistil of the flower is made of little buds that contain a soft and
-    fruity pip that will squish but bounce back to its normal form. These pips are
-    commonly consumed as they relive pain and sorness of everyday work.
-  alchemicalTratis: 01000000
+  maxValue: 2
+  itemDescription: A green gel substance created from imbueing Ivy in Water.
+  alchemicalTratis: 02000000
   alchemyCraftingRecipe: []
-  canMortarPestle: 1
-  mortarPestleResult: {fileID: 11400000, guid: 041874a3c168dae4da8cc50306124b2b, type: 2}
+  canMortarPestle: 0
+  mortarPestleResult: {fileID: 0}
   mortarPestleResult2: {fileID: 0}
   canJuicer: 0
   juicerResult: {fileID: 0}
@@ -58,6 +54,8 @@ MonoBehaviour:
   canChopping: 0
   choppingResult: {fileID: 0}
   choppingResult2: {fileID: 0}
-  canImbue: 0
-  ImbueRecipe: []
+  canImbue: 1
+  ImbueRecipe:
+  - {fileID: 11400000, guid: 9ceafc44089db604b86a248a259e9b20, type: 2}
+  - {fileID: 11400000, guid: e94fce2541ae38c4eb188116752a5a40, type: 2}
   canBunsenBurner: 0

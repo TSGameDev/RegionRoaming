@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71a06be2964767b42b4589c0a2856529, type: 3}
-  m_Name: Crimson Lims-Petal Stem
+  m_Name: Water
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -36,14 +36,14 @@ MonoBehaviour:
       Data: 
   ingredientImage: {fileID: 0}
   ID: 0
-  ingredientName: Crimson Lims-Petal Stem
+  ingredientName: Water
   ingredientTier: 1
   ingredientPrefab: {fileID: 0}
-  ingredientType: 1
-  minValue: 1
-  maxValue: 2
-  itemDescription: A thin leafy stem from the Crimson Lims-Petal flower.
-  alchemicalTratis: 04000000
+  ingredientType: 0
+  minValue: 0
+  maxValue: 0
+  itemDescription: Nice clean water from a water supply.
+  alchemicalTratis: 
   alchemyCraftingRecipe: []
   canMortarPestle: 0
   mortarPestleResult: {fileID: 0}

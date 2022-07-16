@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71a06be2964767b42b4589c0a2856529, type: 3}
-  m_Name: Crimson Lims-Petal Stem
+  m_Name: Lotus
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -36,14 +36,16 @@ MonoBehaviour:
       Data: 
   ingredientImage: {fileID: 0}
   ID: 0
-  ingredientName: Crimson Lims-Petal Stem
-  ingredientTier: 1
-  ingredientPrefab: {fileID: 0}
+  ingredientName: 
+  ingredientTier: 2
+  ingredientPrefab: {fileID: 2864651717612336768, guid: fa5017e4fd4b2764186ac7618a3cb4e0,
+    type: 3}
   ingredientType: 1
-  minValue: 1
-  maxValue: 2
-  itemDescription: A thin leafy stem from the Crimson Lims-Petal flower.
-  alchemicalTratis: 04000000
+  minValue: 5
+  maxValue: 7
+  itemDescription: A water-based flower with no stem. A central yellow base, hard
+    and texture like a fruit stone with delicate pink fading white petals sprouting.
+  alchemicalTratis: 0100000003000000
   alchemyCraftingRecipe: []
   canMortarPestle: 0
   mortarPestleResult: {fileID: 0}
