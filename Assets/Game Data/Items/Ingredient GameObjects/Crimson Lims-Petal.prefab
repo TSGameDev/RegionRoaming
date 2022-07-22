@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerConnector: {fileID: 11400000, guid: 501361368eea1fd48b39a926fc22441d, type: 2}
-  harvestItem: {fileID: 0}
+  harvestItem: {fileID: 11400000, guid: 3a2861dd9e71115449d12fba4cc51216, type: 2}
   minHarvestAmount: 1
   maxHarvestAmount: 5
 --- !u!65 &5968528495298923336
